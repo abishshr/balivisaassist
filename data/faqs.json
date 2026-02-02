@@ -1,0 +1,96 @@
+{
+  "categories": [
+    {
+      "id": "general",
+      "name": "General Questions",
+      "faqs": [
+        {
+          "question": "What is BaliVisaAssist?",
+          "answer": "BaliVisaAssist is a professional visa assistance service operated by PT CIPTA SOLUSI GLOBAL. We help foreigners obtain the right visa and permits to live, work, or retire in Indonesia legally and hassle-free."
+        },
+        {
+          "question": "Are you affiliated with the Indonesian government?",
+          "answer": "No, we are not a government agency. We are a private visa assistance company that helps facilitate visa applications with Indonesian immigration authorities. All final visa decisions are made by the Indonesian government."
+        },
+        {
+          "question": "Which nationalities do you serve?",
+          "answer": "We assist clients from all nationalities. However, visa requirements and processing times may vary depending on your country of origin. Contact us to confirm eligibility for your specific nationality."
+        },
+        {
+          "question": "Do you guarantee visa approval?",
+          "answer": "We cannot guarantee visa approval as all final decisions are made by Indonesian immigration authorities. However, we have a high success rate and will only proceed with applications that meet the eligibility criteria."
+        },
+        {
+          "question": "How do I get started?",
+          "answer": "Simply contact us via WhatsApp or fill out our contact form. Tell us which visa you're interested in, your nationality, and your timeline. We'll guide you through the entire process step by step."
+        }
+      ]
+    },
+    {
+      "id": "processing",
+      "name": "Processing & Timeline",
+      "faqs": [
+        {
+          "question": "How long does visa processing take?",
+          "answer": "Processing times vary by visa type: VOA (same day), C1 Visa (3-5 business days), KITAS (4-8 weeks), PT PMA setup (4-6 weeks). We'll provide specific timelines based on your visa type."
+        },
+        {
+          "question": "Can you expedite my visa application?",
+          "answer": "In some cases, expedited processing is available for an additional fee. Contact us to discuss your urgent timeline and we'll advise on the best options."
+        },
+        {
+          "question": "What happens if my application is rejected?",
+          "answer": "Rejections are rare if all requirements are met. If your application is rejected, we'll work with you to understand the reason and explore alternative visa options. Refund policies vary by visa type."
+        },
+        {
+          "question": "Do I need to be in Indonesia to apply?",
+          "answer": "It depends on the visa type. Some visas (like C1) can be processed before you arrive. Others (like KITAS) may require you to be in Indonesia. We'll advise based on your specific visa."
+        }
+      ]
+    },
+    {
+      "id": "pricing",
+      "name": "Pricing & Payment",
+      "faqs": [
+        {
+          "question": "Are government fees included in your prices?",
+          "answer": "Yes, our prices include government fees, processing fees, and our service fees. The price you see is the total cost, with no hidden charges."
+        },
+        {
+          "question": "Why do prices say 'starting from'?",
+          "answer": "Prices may vary based on your nationality, processing time (standard vs. expedited), and specific requirements. The 'starting from' price is the minimum for standard processing. Contact us for an exact quote."
+        },
+        {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept bank transfers (IDR and USD), credit/debit cards, and digital payment platforms. Payment terms will be discussed during the consultation."
+        },
+        {
+          "question": "Do I pay upfront or after approval?",
+          "answer": "Payment terms vary by visa type. Typically, we require a deposit to start processing, with the balance due upon approval or before visa issuance. We'll provide clear payment terms before you commit."
+        }
+      ]
+    },
+    {
+      "id": "sponsorship",
+      "name": "Sponsorship & Support",
+      "faqs": [
+        {
+          "question": "What is a visa sponsor?",
+          "answer": "Indonesian law requires most long-term visas to be sponsored by a licensed Indonesian company. We provide sponsorship services through our network of licensed sponsor companies."
+        },
+        {
+          "question": "Do I need to have a job or company to get a KITAS?",
+          "answer": "Not necessarily. For work KITAS, yes, you need employment or a PT PMA. But for Retirement KITAS or Digital Nomad KITAS, we provide the sponsor. Each visa type has different requirements."
+        },
+        {
+          "question": "What ongoing support do you provide?",
+          "answer": "We provide full support including KITAS renewals, re-entry permits, address changes, and compliance assistance. Our relationship doesn't end after your visa is issued."
+        },
+        {
+          "question": "Can you help with family members' visas?",
+          "answer": "Yes! We can assist with dependent visas for spouses and children. Family members can be added to your KITAS application (additional fees apply per person)."
+        }
+      ]
+    }
+  ]
+}
