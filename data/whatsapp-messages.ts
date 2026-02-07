@@ -8,12 +8,13 @@ export const whatsappTemplates: WhatsAppTemplate[] = [
     serviceId: 'c1-visa',
     message: `Hi BaliVisaAssist! 👋
 
-I'm interested in the *C1 Visa* (60-day business visa).
+I'm interested in the *C1 Tourist Visa* (60-day single entry visa).
 
 My details:
 - Nationality: [Your nationality]
 - Intended arrival date: [Date]
-- Purpose: [Business/Exploration/Other]
+- Purpose: [Tourism/Family visit/Attending event]
+- Planned duration: [60 days / Need extensions to 180 days]
 
 Please let me know the next steps and exact pricing for my nationality. Thank you!`,
   },
@@ -26,8 +27,11 @@ I'm interested in the *Retirement KITAS* (1-year permit).
 My details:
 - Age: [Your age - must be 55+]
 - Nationality: [Your nationality]
+- Monthly pension/retirement income: [USD amount]
 - Current location: [Country]
 - Planned move date: [Date]
+
+Note: Minimum USD 3,000/month pension required.
 
 I'd like to know more about the process and requirements. Thank you!`,
   },
@@ -35,12 +39,13 @@ I'd like to know more about the process and requirements. Thank you!`,
     serviceId: 'digital-nomad-kitas',
     message: `Hi BaliVisaAssist! 👋
 
-I'm interested in the *Digital Nomad KITAS* (5-year Second Home Visa).
+I'm interested in the *E33 Second Home Visa* (5-year Digital Nomad permit).
 
 My details:
 - Nationality: [Your nationality]
 - Current location: [Country]
-- Work: [Remote/Freelance/Business owner]
+- Work: [Remote/Freelance/Business owner/Investor]
+- Financial commitment option: [USD 130k bank savings / USD 1M property purchase]
 - Planned move date: [Date]
 
 Please let me know the requirements and next steps. Thank you!`,
@@ -76,15 +81,15 @@ Please let me know how you can help. Thank you!`,
     serviceId: 'd12-visa',
     message: `Hi BaliVisaAssist! 👋
 
-I'm interested in the *D12 Investor Visa*.
+I'm interested in the *D12 Pre-Investment Visit Visa*.
 
 My details:
 - Nationality: [Your nationality]
-- PT PMA status: [Already own PT PMA / Need PT PMA setup]
-- Business type: [Your business type]
-- Planned application date: [Date]
+- Purpose: [Business survey/Investment exploration/Field research]
+- Intended arrival date: [Date]
+- Visa validity preference: [1 year / 2 years]
 
-Please advise on the requirements and process. Thank you!`,
+Please help me with the application process and requirements. Thank you!`,
   },
   {
     serviceId: 'pt-pma',

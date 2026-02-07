@@ -1,0 +1,26 @@
+services:
+  # Main web service
+  - type: web
+    name: balivisaassist
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CRON_SECRET
+        generateValue: true
+
+  # Cron job to scrape news daily
+  - type: cron
+    name: visa-news-scraper
+    env: node
+    region: singapore
+    schedule: "0 6 * * *"  # Run daily at 6 AM UTC (2 PM Jakarta time)
+    buildCommand: npm install
+    startCommand: curl -X GET "https://balivisaassist.onrender.com/api/scrape-news?secret=$CRON_SECRET"
+    envVars:
+      - key: CRON_SECRET
+        sync: false  # Use the same secret as the web service

@@ -60,27 +60,33 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300"
+              className="relative bg-white/5 backdrop-blur-3xl rounded-3xl p-8 border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden shadow-2xl"
             >
+              {/* iOS-style glass reflections */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
+
               {/* Rating */}
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-1 mb-4 relative z-10">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star
                     key={i}
-                    className="w-5 h-5 text-amber-400 fill-current"
+                    className="w-5 h-5 text-amber-400 fill-current drop-shadow-lg"
                   />
                 ))}
               </div>
 
               {/* Content */}
-              <p className="text-white mb-6 leading-relaxed text-lg">
+              <p className="text-white mb-6 leading-relaxed text-lg relative z-10 drop-shadow-md">
                 "{testimonial.content}"
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-white/20">
-                <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-2xl">
-                  {testimonial.avatar}
+              <div className="flex items-center gap-3 pt-4 border-t border-white/20 relative z-10">
+                <div className="relative w-12 h-12 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-full flex items-center justify-center text-2xl shadow-xl border border-white/30 overflow-hidden">
+                  {/* Glass reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-full"></div>
+                  <span className="relative z-10">{testimonial.avatar}</span>
                 </div>
                 <div>
                   <div className="font-bold text-white">

@@ -27,7 +27,7 @@ export const FAQPreview = React.memo(function FAQPreview() {
     },
     {
       question: 'What if my visa application is rejected?',
-      answer: 'While we have a 98% success rate, in the rare case of rejection, we review the reasons and help you reapply. Our experience helps minimize rejection risks from the start.',
+      answer: 'In the rare case of rejection, we review the reasons with you and help you reapply. Our expertise in Indonesian immigration law helps minimize rejection risks from the start.',
     },
   ];
 
@@ -39,19 +39,21 @@ export const FAQPreview = React.memo(function FAQPreview() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="text-center mb-16"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full text-sm font-bold mb-6 shadow-xl text-white"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="relative inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-full text-sm font-bold mb-6 shadow-xl text-white border border-white/30 backdrop-blur-xl overflow-hidden"
             >
-              <HelpCircle className="w-4 h-4" />
-              Common Questions
+              {/* Glass reflection */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-full"></div>
+              <HelpCircle className="w-4 h-4 relative z-10" />
+              <span className="relative z-10">Common Questions</span>
             </motion.div>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-lg">
               Frequently Asked Questions
@@ -68,15 +70,18 @@ export const FAQPreview = React.memo(function FAQPreview() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ scale: 1.01 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.3, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.005 }}
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full text-left bg-white/15 backdrop-blur-xl rounded-2xl border border-white/30 hover:bg-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl group"
+                  className="relative w-full text-left bg-white/5 backdrop-blur-3xl rounded-3xl border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 shadow-xl hover:shadow-2xl group overflow-hidden"
                 >
-                  <div className="p-6 flex items-start justify-between gap-4">
+                  {/* iOS-style glass reflections */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
+                  <div className="p-6 flex items-start justify-between gap-4 relative z-10">
                     <div className="flex-1">
                       <h3 className="text-lg font-bold text-white group-hover:text-amber-300 transition-colors pr-2 drop-shadow-md">
                         {faq.question}
@@ -84,7 +89,7 @@ export const FAQPreview = React.memo(function FAQPreview() {
                     </div>
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
                       className="flex-shrink-0"
                     >
                       <ChevronDown className="w-6 h-6 text-gray-200 group-hover:text-amber-400 transition-colors" />
@@ -97,7 +102,7 @@ export const FAQPreview = React.memo(function FAQPreview() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
                         className="overflow-hidden"
                       >
                         <div className="px-6 pb-6 pt-0">
@@ -119,16 +124,19 @@ export const FAQPreview = React.memo(function FAQPreview() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-center mt-12"
           >
             <Link
               href="/faq"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md text-white hover:bg-white/20 font-bold text-lg transition-all duration-300 group rounded-xl border border-white/20 shadow-xl"
+              className="relative inline-flex items-center gap-2 px-6 py-3 bg-white/5 backdrop-blur-3xl text-white hover:bg-white/10 font-bold text-lg transition-all duration-300 group rounded-3xl border border-white/30 hover:border-white/50 shadow-2xl overflow-hidden"
             >
-              View All FAQs
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+              {/* iOS-style glass reflection */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none"></div>
+
+              <span className="relative z-10">View All FAQs</span>
+              <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>

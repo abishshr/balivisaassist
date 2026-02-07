@@ -26,14 +26,20 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-white/10 backdrop-blur-xl text-white border-t border-white/20 shadow-2xl relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
+    <footer className="bg-white/5 backdrop-blur-2xl text-white border-t border-white/20 shadow-2xl relative z-10 overflow-hidden" style={{ willChange: 'auto', transform: 'translateZ(0)' }}>
+      {/* iOS-style glass reflections */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-8">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-xl">
-                <span className="text-white font-bold text-lg sm:text-xl">🌴</span>
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-2xl flex items-center justify-center shadow-xl backdrop-blur-xl border border-white/30 overflow-hidden">
+                {/* Glass reflection */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-2xl"></div>
+                <span className="text-white font-bold text-lg sm:text-xl relative z-10">🌴</span>
               </div>
               <span className="text-lg sm:text-xl font-black text-white drop-shadow-lg">
                 {COMPANY.brandName}

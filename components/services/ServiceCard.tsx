@@ -24,16 +24,22 @@ export const ServiceCard = React.memo(function ServiceCard({ service }: ServiceC
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className="h-full"
     >
-      <div className="h-full flex flex-col bg-white/15 backdrop-blur-xl rounded-3xl border border-white/30 shadow-2xl hover:shadow-3xl hover:bg-white/20 transition-all duration-500 group overflow-hidden">
-        <div className="flex flex-col h-full p-6 sm:p-8">
+      <div className="relative h-full flex flex-col bg-white/5 backdrop-blur-3xl rounded-3xl border border-white/20 shadow-2xl hover:shadow-3xl hover:bg-white/10 hover:border-white/30 transition-all duration-500 group overflow-hidden">
+        {/* iOS-style glass reflections */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
+
+        <div className="flex flex-col h-full p-6 sm:p-8 relative z-10">
           {/* Icon and Popular Badge */}
           <div className="flex items-start justify-between mb-6">
             <motion.div
               whileHover={{ rotate: 15, scale: 1.1 }}
               transition={{ duration: 0.3 }}
-              className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300"
+              className="relative w-16 h-16 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-white/30 overflow-hidden"
             >
-              <IconComponent className="w-8 h-8 text-white" />
+              {/* Glass reflection on icon */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-3xl"></div>
+              <IconComponent className="w-8 h-8 text-white relative z-10" />
             </motion.div>
             {service.popular && (
               <Badge variant="secondary" className="animate-pulse text-xs font-bold shadow-lg bg-orange-500/90 text-white border-orange-400/50">
@@ -57,10 +63,12 @@ export const ServiceCard = React.memo(function ServiceCard({ service }: ServiceC
             {service.shortDescription}
           </p>
 
-          {/* Pricing - Frosted Glass Box */}
-          <div className="mb-8 p-6 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 shadow-xl">
-            <p className="text-sm text-gray-200 mb-2 font-semibold">Starting from</p>
-            <p className="text-4xl font-black text-white drop-shadow-lg">
+          {/* Pricing - iOS Glass Box */}
+          <div className="relative mb-8 p-6 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/30 shadow-xl overflow-hidden">
+            {/* Glass reflection */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+            <p className="text-sm text-gray-200 mb-2 font-semibold relative z-10">Starting from</p>
+            <p className="text-4xl font-black text-white drop-shadow-lg relative z-10">
               {formatPrice(service.startingPrice)}
             </p>
           </div>
@@ -78,13 +86,10 @@ export const ServiceCard = React.memo(function ServiceCard({ service }: ServiceC
             <WhatsAppButton
               serviceId={service.id}
               fixed={false}
-              className="w-full min-h-[48px] font-bold bg-white/20 backdrop-blur-md border-2 border-white/40 text-white hover:bg-white/30 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="w-full min-h-[48px] font-bold shadow-xl hover:shadow-2xl transition-all duration-300"
             />
           </div>
         </div>
-
-        {/* Gradient Overlay for Depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
       </div>
     </motion.div>
   );

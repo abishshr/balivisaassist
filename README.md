@@ -71,12 +71,12 @@ balivisaassist/
 
 ## 📊 All 7 Visa Services
 
-1. **C1 Visa** - IDR 2,700,000 (60-day business visa)
-2. **Retirement KITAS** - IDR 8,500,000 (1-year retiree permit)
-3. **Digital Nomad KITAS** - IDR 14,500,000 (5-year remote work permit)
-4. **Investor/Working KITAS** - IDR 18,000,000 (1-year work permit)
-5. **VOA Visa** - IDR 650,000 (30-day tourist visa)
-6. **D12 Visa** - IDR 7,500,000 (1-year investor visa)
+1. **C1 Tourist Visa** - IDR 2,700,000 (60-day single entry visa, extendable to 180 days)
+2. **Retirement KITAS** - IDR 8,500,000 (1-year retiree permit, age 55+, requires USD 3k/month pension)
+3. **E33 Second Home Visa** - IDR 14,500,000 (5-year digital nomad permit, requires USD 130k commitment)
+4. **E23 Working KITAS** - IDR 18,000,000 (6-12 month work permit with IMTA)
+5. **VOA Visa** - IDR 650,000 (30-day tourist visa, extendable once for 30 days)
+6. **D12 Pre-Investment Visa** - IDR 5,000,000 (1-2 year multiple entry, no sponsor required)
 7. **PT PMA** - IDR 17,500,000 (Company setup)
 
 ## ✅ Features Implemented

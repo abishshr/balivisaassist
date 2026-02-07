@@ -15,12 +15,18 @@ export function ComplianceDisclaimer() {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="bg-white/15 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden">
-            <div className="p-8 sm:p-10 md:p-12">
+          <div className="relative bg-white/5 backdrop-blur-3xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
+            {/* iOS-style glass reflections */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
+
+            <div className="p-8 sm:p-10 md:p-12 relative z-10">
               {/* Header */}
               <div className="flex items-start gap-4 mb-8">
-                <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-xl">
-                  <AlertCircle className="w-7 h-7 text-white" />
+                <div className="relative w-14 h-14 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-3xl flex items-center justify-center flex-shrink-0 shadow-xl border border-white/30 overflow-hidden">
+                  {/* Glass reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-3xl"></div>
+                  <AlertCircle className="w-7 h-7 text-white relative z-10" />
                 </div>
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-white mb-2 drop-shadow-lg">
@@ -34,8 +40,10 @@ export function ComplianceDisclaimer() {
 
               {/* Content */}
               <div className="space-y-6">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                  <p className="text-base text-white leading-relaxed drop-shadow-md">
+                <div className="relative bg-white/10 backdrop-blur-2xl rounded-3xl p-6 border border-white/30 overflow-hidden shadow-xl">
+                  {/* Glass reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+                  <p className="text-base text-white leading-relaxed drop-shadow-md relative z-10">
                     BaliVisaAssist is <strong className="text-amber-300">not affiliated with, endorsed by, or part of</strong> the
                     Indonesian government or any government immigration agency. We are a <strong className="text-amber-300">private visa
                     assistance and sponsorship service</strong> operated by PT CIPTA SOLUSI GLOBAL.
@@ -44,18 +52,22 @@ export function ComplianceDisclaimer() {
 
                 {/* Key Points */}
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="flex items-start gap-3 p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                    <Shield className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <div>
+                  <div className="relative flex items-start gap-3 p-5 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/30 overflow-hidden shadow-xl">
+                    {/* Glass reflection */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+                    <Shield className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5 relative z-10 drop-shadow-lg" />
+                    <div className="relative z-10">
                       <p className="text-sm text-white leading-relaxed drop-shadow-sm">
                         <strong className="text-amber-300">We provide:</strong> Legal visa sponsorship and professional assistance
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3 p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
-                    <CheckCircle className="w-6 h-6 text-blue-400 flex-shrink-0 mt-0.5" />
-                    <div>
+                  <div className="relative flex items-start gap-3 p-5 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/30 overflow-hidden shadow-xl">
+                    {/* Glass reflection */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-transparent rounded-3xl pointer-events-none"></div>
+                    <CheckCircle className="w-6 h-6 text-blue-400 flex-shrink-0 mt-0.5 relative z-10 drop-shadow-lg" />
+                    <div className="relative z-10">
                       <p className="text-sm text-white leading-relaxed drop-shadow-sm">
                         <strong className="text-amber-300">Final approval:</strong> Decided solely by Indonesian immigration authorities
                       </p>

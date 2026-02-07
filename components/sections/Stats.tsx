@@ -3,20 +3,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, CheckCircle, Clock } from 'lucide-react';
+import { StatsBackground } from '@/components/layout/BaliBackground';
 
 export const Stats = React.memo(function Stats() {
   const stats = [
     {
-      icon: Users,
-      value: '500+',
-      label: 'Happy Clients',
-      description: 'Visas processed successfully',
-    },
-    {
       icon: CheckCircle,
-      value: '98%',
-      label: 'Success Rate',
-      description: 'Applications approved',
+      value: '100%',
+      label: 'Licensed',
+      description: 'Legal visa sponsor',
     },
     {
       icon: Clock,
@@ -26,28 +21,35 @@ export const Stats = React.memo(function Stats() {
     },
     {
       icon: TrendingUp,
-      value: '7+',
+      value: '7',
       label: 'Visa Types',
       description: 'Comprehensive services',
+    },
+    {
+      icon: Users,
+      value: '24/7',
+      label: 'Support',
+      description: 'Always available for you',
     },
   ];
 
   return (
     <section className="py-20 sm:py-28 relative z-10">
+      <StatsBackground />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-lg">
-            Trusted by Hundreds of Expats
+            Your Trusted Visa Partner
           </h2>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-            Our numbers speak for themselves. We've helped people from all over the world make Bali their home. 🏝️
+            Professional, licensed visa services to help you make Bali your home. 🏝️
           </p>
         </motion.div>
 
@@ -58,15 +60,15 @@ export const Stats = React.memo(function Stats() {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -12, scale: 1.02, transition: { duration: 0.4, ease: 'easeOut' } }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8, scale: 1.01, transition: { duration: 0.2, ease: 'easeOut' } }}
             >
               <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 hover:bg-white/20 transition-all duration-500 hover:shadow-3xl h-full group">
                 {/* Icon */}
                 <motion.div
-                  whileHover={{ rotate: 360, scale: 1.15 }}
-                  transition={{ duration: 0.6 }}
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl"
                 >
                   <stat.icon className="w-8 h-8 text-white" />
@@ -100,12 +102,12 @@ export const Stats = React.memo(function Stats() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mt-12 sm:mt-16"
         >
           <p className="text-gray-200 text-base drop-shadow-md">
-            Join hundreds of satisfied clients living their dream life in Bali 🌴
+            Start your journey to living your dream life in Bali 🌴
           </p>
         </motion.div>
       </div>

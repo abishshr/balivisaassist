@@ -20,13 +20,15 @@ export function Badge({ variant = 'primary', className, children, ...props }: Ba
   return (
     <span
       className={cn(
-        'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-sm',
+        'relative inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-xl shadow-lg overflow-hidden',
         variants[variant],
         className
       )}
       {...props}
     >
-      {children}
+      {/* Glass reflection */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-full pointer-events-none"></div>
+      <span className="relative z-10">{children}</span>
     </span>
   );
 }

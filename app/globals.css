@@ -47,15 +47,48 @@ body {
   line-height: 1.5;
 }
 
-/* Ultra smooth scrolling */
+/* Ultra smooth scrolling with hardware acceleration */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* Smooth scroll for all elements */
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Performance optimizations */
 * {
-  scroll-behavior: smooth;
+  /* Optimize touch interactions on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimize all scrollable elements */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Hardware acceleration for glass elements - REDUCE blur for better performance */
+.backdrop-blur-3xl,
+.backdrop-blur-2xl,
+.backdrop-blur-xl,
+.backdrop-blur-lg,
+.backdrop-blur-md {
+  will-change: auto;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  /* Contain layout calculations */
+  contain: layout style paint;
 }
 
 /* Better performance for animations */
@@ -84,4 +117,194 @@ html {
   margin-right: auto;
   padding-left: var(--container-padding);
   padding-right: var(--container-padding);
+}
+
+/* News Ticker Animation - NYSE Style */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 60s linear infinite;
+  will-change: transform;
+}
+
+.pause-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Liquid Glass Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 8s infinite;
+}
+
+/* Floating/Breathing Effect */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Logo Sparkle Effect */
+@keyframes logo-sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.logo-sparkle {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-sparkle::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4) 45%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.4) 55%,
+    transparent
+  );
+  animation: logo-sparkle 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Performance optimizations for smooth scrolling */
+@layer utilities {
+  /* Optimize backdrop blur - REDUCED values for ultra-smooth performance */
+  .backdrop-blur-3xl {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+/* GPU acceleration for ALL positioned elements */
+.relative,
+.absolute,
+.fixed {
+  will-change: auto;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Optimize image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Force GPU rendering */
+  transform: translateZ(0);
+}
+
+/* Ultra smooth transitions with optimized easing */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Further reduce blur on mobile for better performance */
+  .backdrop-blur-3xl {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+/* Optimize touch scrolling on mobile */
+@supports (-webkit-overflow-scrolling: touch) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Prevent layout shifts */
+main,
+section {
+  contain: layout style;
+}
+
+/* Optimize animation performance */
+@media (hover: hover) and (pointer: fine) {
+  /* Only enable complex hover effects on desktop */
+  .group:hover {
+    contain: layout style paint;
+  }
 }

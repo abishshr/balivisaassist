@@ -16,17 +16,17 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    'group inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border shadow-lg hover:shadow-2xl active:scale-95 transform relative overflow-hidden';
 
   const variants = {
     primary:
-      'bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-500 shadow-lg hover:shadow-xl active:scale-95 transform',
+      'bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 text-white hover:from-amber-500 hover:via-amber-400 hover:to-orange-500 focus:ring-amber-400/50 border-white/30',
     secondary:
-      'bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-400 shadow-lg hover:shadow-xl active:scale-95 transform',
+      'bg-gradient-to-br from-orange-500/90 via-orange-400/80 to-red-500/90 text-white hover:from-orange-500 hover:via-orange-400 hover:to-red-500 focus:ring-orange-400/50 border-white/30',
     outline:
-      'border-2 border-amber-500 text-amber-600 hover:bg-amber-50 focus:ring-amber-500 active:scale-95 transform',
+      'bg-white/10 backdrop-blur-2xl border-white/30 text-white hover:bg-white/20 hover:border-white/50 focus:ring-white/50',
     ghost:
-      'text-gray-700 hover:bg-gray-100 focus:ring-gray-500 active:scale-95 transform',
+      'bg-white/5 backdrop-blur-xl border-white/20 text-white hover:bg-white/15 hover:border-white/30 focus:ring-white/30',
   };
 
   const sizes = {
@@ -40,7 +40,15 @@ export function Button({
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
-      {children}
+      {/* Glass reflection effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent rounded-2xl pointer-events-none" />
+
+      {/* Inner glow for primary and secondary variants */}
+      {(variant === 'primary' || variant === 'secondary') && (
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      )}
+
+      <span className="relative z-10 inline-flex items-center gap-2">{children}</span>
     </button>
   );
 }

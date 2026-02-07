@@ -4,9 +4,11 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/common/WhatsAppButton";
+import { VisaNewsTicker } from "@/components/common/VisaNewsTicker";
 import { BaliBackground } from "@/components/layout/BaliBackground";
 import { AnalyticsWrapper } from "@/components/analytics/AnalyticsWrapper";
 import { SEO } from "@/constants/company";
+import { MotionProvider } from "@/components/providers/MotionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,16 +63,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-transparent`}
       >
-        <BaliBackground />
-        <div className="relative z-10">
-          <AnalyticsWrapper />
-          <Header />
-          <main className="min-h-screen pt-16 md:pt-20">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppButton />
-        </div>
+        <MotionProvider>
+          <BaliBackground />
+          <div className="relative z-10">
+            <AnalyticsWrapper />
+            <Header />
+            <VisaNewsTicker />
+            <main className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+            <WhatsAppButton />
+          </div>
+        </MotionProvider>
       </body>
     </html>
   );
