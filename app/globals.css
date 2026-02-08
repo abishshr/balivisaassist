@@ -52,19 +52,14 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   overflow-x: hidden;
-  overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
-  scrollbar-gutter: stable; /* Reserve space for scrollbar */
+  overflow-y: auto;
 }
 
 body {
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Force GPU layer for entire page */
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 /* Performance optimizations */
@@ -336,34 +331,10 @@ img {
   }
 }
 
-/* Prevent layout shifts and optimize rendering */
+/* Prevent layout shifts */
 main,
 section {
   contain: layout style;
-}
-
-/* Optimize sections with backgrounds */
-section {
-  isolation: isolate; /* Create stacking context to prevent repainting */
-}
-
-/* Force compositing for smooth scrolling */
-main {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-}
-
-/* Optimize scroll performance with CSS containment */
-* {
-  /* Hint browser about what will change */
-  will-change: auto;
-}
-
-/* Smooth momentum scrolling on iOS */
-html,
-body {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: none; /* Prevent bounce */
 }
 
 /* Optimize animation performance */
@@ -371,23 +342,5 @@ body {
   /* Only enable complex hover effects on desktop */
   .group:hover {
     contain: layout style paint;
-  }
-}
-
-/* Content visibility for better rendering performance */
-section:not(:first-of-type) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
-}
-
-/* Optimize for 60fps scrolling */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  * {
-    /* Use GPU-accelerated properties only */
-    transition-property: opacity, transform;
   }
 }
