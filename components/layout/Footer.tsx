@@ -35,16 +35,17 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-8">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-              <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-2xl flex items-center justify-center shadow-xl backdrop-blur-xl border border-white/30 overflow-hidden">
-                {/* Glass reflection */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-2xl"></div>
-                <span className="text-white font-bold text-lg sm:text-xl relative z-10">🌴</span>
+            <Link href="/" className="flex items-center space-x-3 mb-3 sm:mb-4 group inline-flex">
+              <div className="relative w-11 h-11 bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 rounded-lg flex items-center justify-center shadow-xl logo-sparkle">
+                {/* Very subtle glow effect */}
+                <div className="absolute inset-0 bg-amber-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                <div className="absolute inset-0 bg-white/20 rounded-lg backdrop-blur-sm"></div>
+                <span className="relative text-white font-black text-2xl drop-shadow-lg z-10">B</span>
               </div>
-              <span className="text-lg sm:text-xl font-black text-white drop-shadow-lg">
-                {COMPANY.brandName}
+              <span className="text-xl font-black text-white drop-shadow-lg">
+                BaliVisa<span className="text-amber-300 drop-shadow-lg">Assist</span>
               </span>
-            </div>
+            </Link>
             <p className="text-sm text-gray-200 mb-3 sm:mb-4 drop-shadow-md">
               {COMPANY.tagline}
             </p>
