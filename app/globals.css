@@ -52,14 +52,19 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shift */
+  scrollbar-gutter: stable; /* Reserve space for scrollbar */
 }
 
 body {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Force GPU layer for entire page */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Performance optimizations */
@@ -220,30 +225,30 @@ body {
 
 /* Performance optimizations for smooth scrolling */
 @layer utilities {
-  /* Optimize backdrop blur - REDUCED values for ultra-smooth performance */
+  /* Optimize backdrop blur - MINIMAL values for buttery-smooth scrolling */
   .backdrop-blur-3xl {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
   .backdrop-blur-2xl {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .backdrop-blur-xl {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
 
-  .backdrop-blur-lg {
+  .backdrop-blur-xl {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
 
-  .backdrop-blur-md {
+  .backdrop-blur-lg {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
 }
 
@@ -261,7 +266,22 @@ img {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   /* Force GPU rendering */
-  transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Optimize background images for smooth scrolling */
+[style*="background-image"] {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optimize fixed backgrounds */
+.bg-fixed {
+  background-attachment: fixed;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 /* Ultra smooth transitions with optimized easing */
@@ -271,20 +291,41 @@ img {
 
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
-  /* Further reduce blur on mobile for better performance */
+  /* Minimal blur on mobile for butter-smooth scrolling */
   .backdrop-blur-3xl {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 
   .backdrop-blur-2xl {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
   }
 
   .backdrop-blur-xl {
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  /* Disable background-attachment: fixed on mobile for better scroll performance */
+  .bg-fixed {
+    background-attachment: scroll !important;
+  }
+
+  /* Simplify backgrounds on mobile */
+  [style*="background-image"] {
+    background-size: cover;
+    background-position: center;
   }
 }
 
@@ -295,10 +336,34 @@ img {
   }
 }
 
-/* Prevent layout shifts */
+/* Prevent layout shifts and optimize rendering */
 main,
 section {
   contain: layout style;
+}
+
+/* Optimize sections with backgrounds */
+section {
+  isolation: isolate; /* Create stacking context to prevent repainting */
+}
+
+/* Force compositing for smooth scrolling */
+main {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scroll performance with CSS containment */
+* {
+  /* Hint browser about what will change */
+  will-change: auto;
+}
+
+/* Smooth momentum scrolling on iOS */
+html,
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none; /* Prevent bounce */
 }
 
 /* Optimize animation performance */
@@ -306,5 +371,23 @@ section {
   /* Only enable complex hover effects on desktop */
   .group:hover {
     contain: layout style paint;
+  }
+}
+
+/* Content visibility for better rendering performance */
+section:not(:first-of-type) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Optimize for 60fps scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    /* Use GPU-accelerated properties only */
+    transition-property: opacity, transform;
   }
 }
