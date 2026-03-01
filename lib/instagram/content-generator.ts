@@ -42,7 +42,7 @@ export async function generateContent(
   const topic = customTopic || topics[Math.floor(Math.random() * topics.length)]
 
   const captionPrompt = template?.caption_prompt
-    || `Generate an Instagram caption about: "${topic}". Category: ${category.replace('_', ' ')}.`
+    || `Write an Instagram caption about: "${topic}". Category: ${category.replace('_', ' ')}.`
 
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
@@ -56,16 +56,18 @@ ${captionPrompt}
 
 Topic: ${topic}
 
-Respond in JSON format with these fields:
+Write it like a real Instagram post from someone who actually lives in Bali — not like a brand or AI. Vary your format: sometimes a short story, sometimes a quick thought, sometimes a longer explainer. Don't follow the same template every time.
+
+Respond in JSON:
 {
-  "caption": "The Instagram caption text (max ${MAX_CAPTION_LENGTH} chars, include 2-4 relevant emojis, end with a call-to-action)",
-  "hashtags": ["array", "of", "relevant", "hashtags", "without", "the", "hash", "symbol"],
-  "imagePrompt": "A detailed prompt for generating an image to accompany this post. Describe the visual style, composition, colors, and mood. Do NOT include any text in the image."
+  "caption": "The caption (max ${MAX_CAPTION_LENGTH} chars). Make it sound human. No listicles with emoji bullets. No generic hooks. Write like a real person.",
+  "hashtags": ["6-12", "relevant", "hashtags", "mix", "of", "niche", "and", "broad"],
+  "imagePrompt": "A photo-realistic image prompt. Think: the kind of photo someone would actually take in Bali with their phone. Natural lighting, real locations, candid feel. NO text overlays, NO graphic design, NO corporate stock photo vibes."
 }
 
-${template?.hashtag_pool?.length ? `Preferred hashtags to include: ${template.hashtag_pool.join(', ')}` : ''}
+${template?.hashtag_pool?.length ? `Include some of these hashtags: ${template.hashtag_pool.join(', ')}` : ''}
 
-Return ONLY valid JSON, no markdown formatting.`,
+Return ONLY valid JSON, no markdown.`,
       },
     ],
   })
@@ -107,27 +109,28 @@ export async function generateNewsCaption(
         role: 'user',
         content: `${BRAND_VOICE}
 
-Transform this immigration news into an engaging Instagram post:
+Here's a news story. Turn it into a natural Instagram post — like you just read about it and want to share it with your followers in your own words. Don't make it sound like a press release.
 
 Title: ${newsTitle}
 Description: ${newsDescription}
 ${newsUrl ? `Source: ${newsUrl}` : ''}
 
-Requirements:
-- Make it informative but accessible to non-experts
-- Explain what this means for expats/tourists in Bali
-- Include practical advice or next steps
-- Add a call-to-action to contact BaliVisaAssist for help
-- Keep caption under ${MAX_CAPTION_LENGTH} characters
+Guidelines:
+- React to the news like a real person would ("just saw this", "heads up everyone", "so this is interesting...")
+- Explain what it actually means in plain language
+- If it's Bali lifestyle news, tie it to the expat experience naturally
+- If it's immigration news, share what people should actually do about it
+- Don't force a sales pitch — if it makes sense to mention your services, do it casually
+- Keep it under ${MAX_CAPTION_LENGTH} characters
 
-Respond in JSON format:
+Respond in JSON:
 {
-  "caption": "The Instagram caption",
+  "caption": "Your natural reaction to the news, written like a real person",
   "hashtags": ["relevant", "hashtags", "without", "hash"],
-  "imagePrompt": "A prompt for generating an image for this news post. News/announcement style, professional, no text in the image."
+  "imagePrompt": "A photo-realistic image related to this news. Think editorial photography — candid Bali scenes, real places, natural lighting. NO text, NO graphics, NO stock photo feel."
 }
 
-Return ONLY valid JSON, no markdown formatting.`,
+Return ONLY valid JSON, no markdown.`,
       },
     ],
   })
@@ -168,20 +171,20 @@ export async function regenerateCaption(
         role: 'user',
         content: `${BRAND_VOICE}
 
-The following Instagram caption needs to be rewritten:
+Rewrite this Instagram caption. It sounds too much like AI wrote it:
 
 "${currentCaption}"
 
 Category: ${category.replace('_', ' ')}
-${feedback ? `Feedback: ${feedback}` : 'Make it better, more engaging, and more on-brand.'}
+${feedback ? `Feedback: ${feedback}` : 'Make it sound like a real person wrote it. Less polished, more authentic.'}
 
-Respond in JSON format:
+Respond in JSON:
 {
-  "caption": "The new caption (max ${MAX_CAPTION_LENGTH} chars)",
+  "caption": "Rewritten caption (max ${MAX_CAPTION_LENGTH} chars) — should sound human and natural",
   "hashtags": ["updated", "hashtags"]
 }
 
-Return ONLY valid JSON, no markdown formatting.`,
+Return ONLY valid JSON, no markdown.`,
       },
     ],
   })

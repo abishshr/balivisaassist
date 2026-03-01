@@ -254,20 +254,83 @@ function generateId(title: string, date: string): string {
 }
 
 /**
+ * Scrape Bali lifestyle/expat news from Coconuts Bali RSS
+ */
+async function scrapeCoconutsBali(): Promise<ScrapedNews[]> {
+  return fetchRSSFeed('https://coconuts.co/bali/feed/')
+}
+
+/**
+ * Scrape Bali news from The Bali Sun RSS
+ */
+async function scrapeBaliSun(): Promise<ScrapedNews[]> {
+  try {
+    const response = await fetch('https://thebalisun.com/feed/', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+    })
+    if (!response.ok) return []
+    const xml = await response.text()
+    const news: ScrapedNews[] = []
+
+    const itemPattern = /<item>(.*?)<\/item>/gs
+    const matches = xml.matchAll(itemPattern)
+
+    for (const match of matches) {
+      const item = match[1]
+      const titleMatch = item.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/i)
+      const title = titleMatch ? (titleMatch[1] || titleMatch[2] || '').trim() : ''
+      const descMatch = item.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>|<description>(.*?)<\/description>/is)
+      const description = descMatch ? stripHtml(descMatch[1] || descMatch[2] || '').trim() : ''
+      const linkMatch = item.match(/<link>(.*?)<\/link>/i)
+      const link = linkMatch ? linkMatch[1].trim() : undefined
+      const dateMatch = item.match(/<pubDate>(.*?)<\/pubDate>/i)
+      const date = dateMatch ? parseDate(dateMatch[1]) : new Date().toISOString().split('T')[0]
+
+      if (title && description) {
+        news.push({
+          title: title.substring(0, 100),
+          description: description.substring(0, 200),
+          date,
+          link,
+          category: categorizeNews(title + ' ' + description),
+        })
+      }
+    }
+
+    return news.slice(0, 5)
+  } catch (error) {
+    console.error('Error scraping The Bali Sun:', error)
+    return []
+  }
+}
+
+/**
+ * Scrape Bali expat community news
+ */
+async function scrapeBaliExpat(): Promise<ScrapedNews[]> {
+  return fetchRSSFeed('https://baliexpat.com/feed/')
+}
+
+/**
  * Main function to scrape all sources and combine news
  */
 export async function fetchLatestVisaNews(): Promise<VisaNews[]> {
-  console.log('🔍 Starting automated news scraping...');
+  console.log('Starting automated news scraping...');
 
   const allNews: ScrapedNews[] = [];
 
-  // Scrape from multiple sources in parallel
-  const [imigrasiNews, evisaNews] = await Promise.all([
+  // Scrape from all sources in parallel (immigration + Bali lifestyle)
+  const [imigrasiNews, evisaNews, coconutsNews, baliSunNews, baliExpatNews] = await Promise.all([
     scrapeImigrasiGovId(),
     scrapeEvisaAnnouncements(),
+    scrapeCoconutsBali(),
+    scrapeBaliSun(),
+    scrapeBaliExpat(),
   ]);
 
-  allNews.push(...imigrasiNews, ...evisaNews);
+  allNews.push(...imigrasiNews, ...evisaNews, ...coconutsNews, ...baliSunNews, ...baliExpatNews);
 
   // Remove duplicates based on similar titles
   const uniqueNews = allNews.filter((news, index, self) =>
@@ -289,7 +352,7 @@ export async function fetchLatestVisaNews(): Promise<VisaNews[]> {
   // Sort by date (newest first)
   visaNews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  console.log(`✅ Scraped ${visaNews.length} news items`);
+  console.log(`Scraped ${visaNews.length} news items from ${allNews.length} raw results`);
 
   return visaNews.slice(0, 10); // Return top 10 news items
 }

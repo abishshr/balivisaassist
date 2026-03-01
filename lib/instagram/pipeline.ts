@@ -195,7 +195,8 @@ export async function generatePost(
 export async function convertNewsToPost(
   newsTitle: string,
   newsDescription: string,
-  newsUrl?: string
+  newsUrl?: string,
+  category: string = 'immigration_news'
 ): Promise<InstagramPost> {
   const supabase = getSupabaseAdmin()
 
@@ -204,7 +205,7 @@ export async function convertNewsToPost(
     .from('instagram_posts')
     .insert({
       status: 'generating',
-      category: 'immigration_news',
+      category,
       source: 'news_scraper',
       news_source_url: newsUrl || null,
       news_title: newsTitle,

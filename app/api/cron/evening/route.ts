@@ -19,7 +19,7 @@ export async function GET(request: Request) {
   const results: Record<string, unknown> = {}
 
   try {
-    // 1. Scrape news (existing functionality)
+    // 1. Scrape news from all sources (immigration + Bali lifestyle)
     const scrapedNews = await fetchLatestVisaNews()
     const newsFilePath = path.join(process.cwd(), 'data', 'scraped-news.json')
     const newsData = { lastUpdated: new Date().toISOString(), news: scrapedNews }
@@ -29,13 +29,19 @@ export async function GET(request: Request) {
     // 2. Convert top news item to IG post (only if there's fresh news)
     if (scrapedNews.length > 0) {
       const topNews = scrapedNews[0]
+      // Determine category based on news content
+      const isImmigrationNews = topNews.category === 'alert' || topNews.category === 'update'
+        || /visa|immigration|passport|kitas|kitap|overstay|permit/i.test(topNews.title + ' ' + topNews.description)
+      const category = isImmigrationNews ? 'immigration_news' : 'bali_lifestyle'
+
       try {
         const post = await convertNewsToPost(
           topNews.title,
           topNews.description,
-          topNews.link
+          topNews.link,
+          category
         )
-        results.newsPost = { id: post.id, status: post.status }
+        results.newsPost = { id: post.id, status: post.status, category }
       } catch (error) {
         results.newsPost = { error: error instanceof Error ? error.message : 'Failed' }
       }
