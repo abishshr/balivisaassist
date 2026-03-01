@@ -1,40 +1,35 @@
 import Link from 'next/link'
+import { Plus } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
 import { ApplicationsTable } from '@/components/admin/ApplicationsTable'
 import type { ApplicationWithCustomer } from '@/types/application'
 
-async function getApplications() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-  const res = await fetch(`${baseUrl}/api/applications`, {
-    cache: 'no-store',
-  })
-
-  if (!res.ok) {
-    return []
-  }
-
-  const data = await res.json()
-  return data.applications || []
-}
-
 export default async function ApplicationsPage() {
-  const applications: ApplicationWithCustomer[] = await getApplications()
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('applications')
+    .select(`*, customer:customers (id, first_name, last_name, email, whatsapp_number, nationality)`)
+    .order('created_at', { ascending: false })
+
+  const applications = (data || []) as unknown as ApplicationWithCustomer[]
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             Applications
           </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            Manage all visa applications
-          </p>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-600 dark:text-zinc-400 tabular-nums">
+            {applications.length}
+          </span>
         </div>
         <Link
           href="/admin/applications/new"
-          className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
-          <span className="text-lg">+</span>
+          <Plus className="w-4 h-4" />
           New Application
         </Link>
       </div>

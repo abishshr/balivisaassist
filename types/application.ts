@@ -27,6 +27,8 @@ export type DocumentType =
   | 'accommodation_proof'
   | 'sponsorship_letter'
   | 'proof_of_payment'
+  | 'bank_statement'
+  | 'invitation_letter'
   | 'other'
 
 export type Payment = Database['public']['Tables']['payments']['Row']

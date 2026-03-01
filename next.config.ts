@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/storage/v1/object/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'replicate.delivery',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.replicate.delivery',
+      },
     ],
   },
 
@@ -26,6 +34,9 @@ const nextConfig: NextConfig = {
       exclude: ['error', 'warn'],
     } : false,
   },
+
+  // Exclude tesseract.js from bundling (needs native worker scripts)
+  serverExternalPackages: ['tesseract.js'],
 
   // Performance optimizations
   poweredByHeader: false,

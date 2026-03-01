@@ -1,143 +1,161 @@
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
 import { StatsCard } from '@/components/admin/StatsCard'
 import { StatusBadge } from '@/components/admin/StatusBadge'
 import { formatPrice } from '@/lib/utils'
-import type { ApplicationWithCustomer } from '@/types/application'
-
-async function getStats() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-  const res = await fetch(`${baseUrl}/api/stats`, {
-    cache: 'no-store',
-  })
-
-  if (!res.ok) {
-    return null
-  }
-
-  return res.json()
-}
+import type { ApplicationStatus } from '@/types/application'
 
 export default async function AdminDashboard() {
-  const stats = await getStats()
+  const supabase = await createClient()
 
-  if (!stats) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-slate-600 dark:text-slate-400">
-          Unable to load dashboard statistics
-        </p>
-      </div>
-    )
-  }
+  // Run all queries in parallel
+  const startOfMonth = new Date()
+  startOfMonth.setDate(1)
+  startOfMonth.setHours(0, 0, 0, 0)
+
+  const [
+    { count: totalApplications },
+    { data: statusCounts },
+    { count: thisMonthApplications },
+    { data: thisMonthPayments },
+    { data: recentApplications },
+  ] = await Promise.all([
+    supabase.from('applications').select('*', { count: 'exact', head: true }),
+    supabase.from('applications').select('status'),
+    supabase
+      .from('applications')
+      .select('*', { count: 'exact', head: true })
+      .gte('created_at', startOfMonth.toISOString()),
+    supabase
+      .from('payments')
+      .select('amount')
+      .eq('payment_status', 'verified')
+      .gte('created_at', startOfMonth.toISOString()),
+    supabase
+      .from('applications')
+      .select(`*, customer:customers (id, first_name, last_name, email, whatsapp_number, nationality)`)
+      .order('created_at', { ascending: false })
+      .limit(5),
+  ])
+
+  const statusBreakdown =
+    statusCounts?.reduce(
+      (acc, app: any) => {
+        acc[app.status] = (acc[app.status] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>
+    ) || {}
+
+  const thisMonthRevenue =
+    thisMonthPayments?.reduce((sum, p: any) => sum + Number(p.amount), 0) || 0
+
+  const inProgress =
+    (statusBreakdown.new || 0) +
+    (statusBreakdown.documents_pending || 0) +
+    (statusBreakdown.documents_received || 0) +
+    (statusBreakdown.under_review || 0) +
+    (statusBreakdown.submitted_to_immigration || 0)
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-          Dashboard
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400">
-          Welcome back! Here's what's happening with your visa applications.
-        </p>
-      </div>
+      <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+        Dashboard
+      </h1>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           title="Total Applications"
-          value={stats.totalApplications}
-          icon="📋"
+          value={totalApplications || 0}
+          color="emerald"
           description="All time"
         />
         <StatsCard
           title="This Month"
-          value={stats.thisMonthApplications}
-          icon="📅"
+          value={thisMonthApplications || 0}
+          color="blue"
           description="New applications"
         />
         <StatsCard
           title="In Progress"
-          value={
-            (stats.statusBreakdown.new || 0) +
-            (stats.statusBreakdown.documents_pending || 0) +
-            (stats.statusBreakdown.documents_received || 0) +
-            (stats.statusBreakdown.under_review || 0) +
-            (stats.statusBreakdown.submitted_to_immigration || 0)
-          }
-          icon="⏳"
+          value={inProgress}
+          color="amber"
           description="Active applications"
         />
         <StatsCard
           title="Revenue (This Month)"
-          value={formatPrice(stats.thisMonthRevenue)}
-          icon="💰"
+          value={formatPrice(thisMonthRevenue)}
+          color="violet"
           description="Verified payments"
         />
       </div>
 
       {/* Status Breakdown */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-4 lg:p-5">
+        <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
           Applications by Status
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {Object.entries(stats.statusBreakdown).map(([status, count]) => (
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(statusBreakdown).map(([status, count]) => (
             <div
               key={status}
-              className="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-900 rounded-lg"
+              className="inline-flex items-center gap-2 px-3 py-2 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg"
             >
-              <StatusBadge status={status as any} />
-              <p className="text-2xl font-bold text-slate-900 dark:text-white mt-2">
+              <StatusBadge status={status as ApplicationStatus} />
+              <span className="text-sm font-bold font-mono tabular-nums text-zinc-900 dark:text-zinc-100">
                 {count as number}
-              </p>
+              </span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Recent Applications */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-4 lg:p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
             Recent Applications
           </h2>
           <Link
             href="/admin/applications"
-            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+            className="text-sm text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 font-medium flex items-center gap-1"
           >
-            View all →
+            View all
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {stats.recentApplications.length === 0 ? (
-          <p className="text-center py-8 text-slate-600 dark:text-slate-400">
+        {!recentApplications || recentApplications.length === 0 ? (
+          <p className="text-center py-8 text-zinc-600 dark:text-zinc-400">
             No applications yet
           </p>
         ) : (
-          <div className="space-y-3">
-            {stats.recentApplications.map((app: ApplicationWithCustomer) => (
+          <div className="space-y-1">
+            {recentApplications.map((app: any) => (
               <Link
                 key={app.id}
                 href={`/admin/applications/${app.id}`}
-                className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
               >
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-1">
-                    <p className="font-semibold text-slate-900 dark:text-white">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <p className="font-semibold font-mono text-sm text-zinc-900 dark:text-zinc-100">
                       {app.application_number}
                     </p>
                     <StatusBadge status={app.status} />
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">
-                    {app.customer.first_name} {app.customer.last_name} •{' '}
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 truncate">
+                    {app.customer?.first_name} {app.customer?.last_name} &middot;{' '}
                     {app.service_name}
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold text-slate-900 dark:text-white">
+                <div className="text-right flex-shrink-0 ml-3">
+                  <p className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                     {formatPrice(app.quoted_price)}
                   </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
                     {new Date(app.created_at).toLocaleDateString()}
                   </p>
                 </div>
@@ -145,59 +163,6 @@ export default async function AdminDashboard() {
             ))}
           </div>
         )}
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link
-            href="/admin/applications/new"
-            className="flex items-center gap-3 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors group"
-          >
-            <span className="text-2xl">➕</span>
-            <div>
-              <p className="font-semibold text-emerald-900 dark:text-emerald-100">
-                New Application
-              </p>
-              <p className="text-sm text-emerald-700 dark:text-emerald-300">
-                Create visa application
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/admin/customers/new"
-            className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
-          >
-            <span className="text-2xl">👤</span>
-            <div>
-              <p className="font-semibold text-blue-900 dark:text-blue-100">
-                New Customer
-              </p>
-              <p className="text-sm text-blue-700 dark:text-blue-300">
-                Add customer profile
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/admin/applications"
-            className="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors group"
-          >
-            <span className="text-2xl">📊</span>
-            <div>
-              <p className="font-semibold text-amber-900 dark:text-amber-100">
-                View Applications
-              </p>
-              <p className="text-sm text-amber-700 dark:text-amber-300">
-                Browse all applications
-              </p>
-            </div>
-          </Link>
-        </div>
       </div>
     </div>
   )

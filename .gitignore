@@ -23,6 +23,14 @@
 # misc
 .DS_Store
 *.pem
+.playwright-mcp/
+.tmp-uploads/
+*.traineddata
+test-passport.jpg
+step*.png
+admin-*.png
+*.md
+!README.md
 
 # debug
 npm-debug.log*

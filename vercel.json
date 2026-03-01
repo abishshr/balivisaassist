@@ -1,7 +1,11 @@
 {
   "crons": [
     {
-      "path": "/api/scrape-news",
+      "path": "/api/cron/morning",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/evening",
       "schedule": "0 6 * * *"
     }
   ]

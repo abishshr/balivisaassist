@@ -8,8 +8,8 @@ import { BaliWatermark } from '@/components/layout/BaliBackground';
 
 export const metadata: Metadata = {
   title: 'About Us - BaliVisaAssist',
-  description: 'Learn about BaliVisaAssist, operated by PT CIPTA SOLUSI GLOBAL. Professional visa assistance services in Indonesia with expert guidance and full compliance.',
-  keywords: 'about BaliVisaAssist, PT CIPTA SOLUSI GLOBAL, Indonesia visa company, Bali visa services',
+  description: 'Learn about BaliVisaAssist, operated by CIPTA SOLUSI GLOBAL. Professional visa assistance services in Indonesia with expert guidance and full compliance.',
+  keywords: 'about BaliVisaAssist, CIPTA SOLUSI GLOBAL, Indonesia visa company, Bali visa services',
 };
 
 export default function AboutPage() {
@@ -47,7 +47,7 @@ export default function AboutPage() {
               About BaliVisaAssist
             </h1>
             <p className="text-xl text-gray-200 leading-relaxed drop-shadow-md">
-              Professional visa assistance services operated by PT CIPTA SOLUSI GLOBAL,
+              Professional visa assistance services operated by CIPTA SOLUSI GLOBAL,
               helping foreigners navigate Indonesia's visa system with ease.
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function AboutPage() {
                 and procedures.
               </p>
               <p>
-                Operated by <strong className="text-white">PT CIPTA SOLUSI GLOBAL</strong>, a registered Indonesian company,
+                Operated by <strong className="text-white">CIPTA SOLUSI GLOBAL</strong>, a registered Indonesian company,
                 we provide fully compliant visa assistance services for tourists, retirees, digital nomads,
                 investors, and businesses looking to establish operations in Indonesia.
               </p>

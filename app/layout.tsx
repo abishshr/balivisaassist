@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/common/WhatsAppButton";
-import { VisaNewsTicker } from "@/components/common/VisaNewsTicker";
-import { BaliBackground } from "@/components/layout/BaliBackground";
+import { PublicShell } from "@/components/layout/PublicShell";
 import { AnalyticsWrapper } from "@/components/analytics/AnalyticsWrapper";
 import { SEO } from "@/constants/company";
 import { MotionProvider } from "@/components/providers/MotionProvider";
@@ -67,17 +63,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-transparent`}
       >
         <MotionProvider>
-          <BaliBackground />
-          <div className="relative z-10">
-            <AnalyticsWrapper />
-            <Header />
-            <VisaNewsTicker />
-            <main className="min-h-screen">
-              {children}
-            </main>
-            <Footer />
-            <WhatsAppButton />
-          </div>
+          <AnalyticsWrapper />
+          <PublicShell>{children}</PublicShell>
         </MotionProvider>
       </body>
     </html>

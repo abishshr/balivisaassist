@@ -46,7 +46,7 @@ export function ComplianceDisclaimer() {
                   <p className="text-base text-white leading-relaxed drop-shadow-md relative z-10">
                     BaliVisaAssist is <strong className="text-amber-300">not affiliated with, endorsed by, or part of</strong> the
                     Indonesian government or any government immigration agency. We are a <strong className="text-amber-300">private visa
-                    assistance and sponsorship service</strong> operated by PT CIPTA SOLUSI GLOBAL.
+                    assistance and sponsorship service</strong> operated by CIPTA SOLUSI GLOBAL.
                   </p>
                 </div>
 

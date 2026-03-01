@@ -78,16 +78,28 @@ My details:
 Please let me know how you can help. Thank you!`,
   },
   {
-    serviceId: 'd12-visa',
+    serviceId: 'd12-visa-1year',
     message: `Hi BaliVisaAssist! 👋
 
-I'm interested in the *D12 Pre-Investment Visit Visa*.
+I'm interested in the *D12 Pre-Investment Visit Visa (1 Year)*.
 
 My details:
 - Nationality: [Your nationality]
 - Purpose: [Business survey/Investment exploration/Field research]
 - Intended arrival date: [Date]
-- Visa validity preference: [1 year / 2 years]
+
+Please help me with the application process and requirements. Thank you!`,
+  },
+  {
+    serviceId: 'd12-visa-2year',
+    message: `Hi BaliVisaAssist! 👋
+
+I'm interested in the *D12 Pre-Investment Visit Visa (2 Years)*.
+
+My details:
+- Nationality: [Your nationality]
+- Purpose: [Business survey/Investment exploration/Field research]
+- Intended arrival date: [Date]
 
 Please help me with the application process and requirements. Thank you!`,
   },

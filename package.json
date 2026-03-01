@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:scraper": "tsx scripts/test-scraper.ts"
+    "test:scraper": "tsx scripts/test-scraper.ts",
+    "immigration:apply": "tsx scripts/apply-immigration.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -20,6 +22,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-toast": "^1.2.15",
+    "@react-pdf/renderer": "^4.3.2",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.3",
     "@tanstack/react-query": "^5.90.20",
@@ -28,14 +31,18 @@
     "date-fns": "^4.1.0",
     "framer-motion": "^12.29.2",
     "lucide-react": "^0.563.0",
+    "mrz": "^5.0.1",
     "next": "16.1.6",
+    "pdf-lib": "^1.17.1",
     "react": "19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "react-hot-toast": "^2.6.0",
+    "replicate": "^1.4.0",
     "resend": "^6.9.1",
     "tailwind-merge": "^3.4.0",
+    "tesseract.js": "^7.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -43,8 +50,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "playwright": "^1.58.2",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"

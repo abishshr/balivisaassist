@@ -4,53 +4,45 @@ interface StatsCardProps {
   title: string
   value: string | number
   description?: string
-  icon?: string
-  trend?: {
-    value: number
-    isPositive: boolean
-  }
+  color?: 'emerald' | 'blue' | 'amber' | 'violet'
   className?: string
+}
+
+const colorStyles = {
+  emerald: 'bg-emerald-500',
+  blue: 'bg-blue-500',
+  amber: 'bg-amber-500',
+  violet: 'bg-violet-500',
 }
 
 export function StatsCard({
   title,
   value,
   description,
-  icon,
-  trend,
+  color = 'emerald',
   className,
 }: StatsCardProps) {
   return (
     <div
       className={cn(
-        'bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-6',
+        'bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-4 lg:p-5 flex gap-4',
         className
       )}
     >
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-slate-600 dark:text-slate-400">
+      <div className={cn('w-1 rounded-full flex-shrink-0', colorStyles[color])} />
+      <div className="min-w-0">
+        <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">
           {title}
         </h3>
-        {icon && <span className="text-2xl">{icon}</span>}
-      </div>
-      <div className="flex items-baseline gap-2">
-        <p className="text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
-        {trend && (
-          <span
-            className={cn(
-              'text-sm font-medium',
-              trend.isPositive ? 'text-emerald-600' : 'text-red-600'
-            )}
-          >
-            {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
-          </span>
+        <p className="text-3xl font-bold font-mono tabular-nums text-zinc-900 dark:text-zinc-100">
+          {value}
+        </p>
+        {description && (
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+            {description}
+          </p>
         )}
       </div>
-      {description && (
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-          {description}
-        </p>
-      )}
     </div>
   )
 }

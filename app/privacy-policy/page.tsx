@@ -3,7 +3,7 @@ import legalData from '@/data/legal.json';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - BaliVisaAssist',
-  description: 'Privacy Policy for BaliVisaAssist, operated by PT CIPTA SOLUSI GLOBAL. Learn how we collect, use, and protect your personal information.',
+  description: 'Privacy Policy for BaliVisaAssist, operated by CIPTA SOLUSI GLOBAL. Learn how we collect, use, and protect your personal information.',
 };
 
 export default function PrivacyPolicyPage() {

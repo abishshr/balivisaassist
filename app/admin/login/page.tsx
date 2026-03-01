@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 export default function AdminLoginPage() {
@@ -39,22 +40,28 @@ export default function AdminLoginPage() {
     }
   }
 
+  const inputClass =
+    'w-full px-4 py-3 rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition text-sm'
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 px-4">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-950 px-4">
+      <div className="relative max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
+          <div className="inline-flex w-14 h-14 rounded-xl bg-emerald-600 items-center justify-center text-white font-bold text-2xl mb-4 shadow-lg shadow-emerald-600/20">
+            B
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-1">
             BaliVisaAssist
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400">Admin Portal</p>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">Admin Portal</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
               >
                 Email Address
               </label>
@@ -64,7 +71,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className={inputClass}
                 placeholder="admin@balivisaassist.com"
               />
             </div>
@@ -72,7 +79,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
               >
                 Password
               </label>
@@ -82,7 +89,7 @@ export default function AdminLoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className={inputClass}
                 placeholder="Enter your password"
               />
             </div>
@@ -96,32 +103,13 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 hover:-translate-y-px disabled:bg-emerald-400 disabled:translate-y-0 text-white font-medium py-3 px-4 rounded-lg transition-all text-sm flex items-center justify-center gap-2 shadow-sm"
             >
               {loading ? (
-                <span className="flex items-center">
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
                   Signing in...
-                </span>
+                </>
               ) : (
                 'Sign In'
               )}
@@ -129,7 +117,7 @@ export default function AdminLoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-center text-xs text-zinc-500 dark:text-zinc-500">
           For support, contact your administrator
         </p>
       </div>

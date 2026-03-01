@@ -1,9 +1,11 @@
 export const COMPANY = {
-  legalName: 'PT CIPTA SOLUSI GLOBAL',
+  legalName: 'CIPTA SOLUSI GLOBAL',
   brandName: 'BaliVisaAssist',
   tagline: 'Your Trusted Partner for Indonesia Visa Services',
   email: 'info@balivisaassist.com',
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '',
+  nib: '3001260059407',
+  npwp: '1000000008078107',
 
   // Social Media (optional - add when available)
   social: {
@@ -12,16 +14,24 @@ export const COMPANY = {
     twitter: '',
   },
 
-  // Office Information (optional - add when available)
+  // Office Information
   office: {
-    address: '',
+    address: 'JL. PANTAI BATU BOLONG NO.38, CANGGU, Kec. Kuta Utara, Kabupaten Badung, Bali 80363',
     city: 'Bali',
     country: 'Indonesia',
   },
 
+  // Director Information
+  director: {
+    name: 'Nadia Feby Claudia',
+    title: 'Director',
+    phone: '082234529826',
+    email: 'pt.ciptasolusiglobal@gmail.com',
+  },
+
   // Legal Disclaimers
   disclaimer: 'We provide visa assistance and sponsorship support. Final decisions are made by Indonesian immigration authorities.',
-  operatorDisclosure: 'BaliVisaAssist is operated by PT CIPTA SOLUSI GLOBAL, Indonesia.',
+  operatorDisclosure: 'BaliVisaAssist is operated by CIPTA SOLUSI GLOBAL, Indonesia.',
 
   // Business Hours (optional)
   businessHours: 'Monday - Friday: 9:00 AM - 5:00 PM WITA',

@@ -3,7 +3,7 @@ import legalData from '@/data/legal.json';
 
 export const metadata: Metadata = {
   title: 'Terms of Service - BaliVisaAssist',
-  description: 'Terms of Service for BaliVisaAssist, operated by PT CIPTA SOLUSI GLOBAL. Read our terms and conditions for using our visa assistance services.',
+  description: 'Terms of Service for BaliVisaAssist, operated by CIPTA SOLUSI GLOBAL. Read our terms and conditions for using our visa assistance services.',
 };
 
 export default function TermsOfServicePage() {
