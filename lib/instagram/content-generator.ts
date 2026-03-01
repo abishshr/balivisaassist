@@ -8,7 +8,19 @@ const anthropic = new Anthropic({
 
 /** Strip markdown code fences from Claude's JSON responses */
 function cleanJsonResponse(text: string): string {
-  return text.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim()
+  // Remove any leading/trailing whitespace first
+  let cleaned = text.trim()
+  // Strip opening code fence (```json or ```) anywhere at the start
+  cleaned = cleaned.replace(/^```(?:json)?\s*\n?/i, '')
+  // Strip closing code fence
+  cleaned = cleaned.replace(/\n?```\s*$/i, '')
+  cleaned = cleaned.trim()
+  // If the result still doesn't start with {, try to extract JSON object
+  if (!cleaned.startsWith('{')) {
+    const match = cleaned.match(/\{[\s\S]*\}/)
+    if (match) cleaned = match[0]
+  }
+  return cleaned
 }
 
 interface GeneratedContent {
