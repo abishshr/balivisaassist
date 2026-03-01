@@ -1,10 +1,4 @@
-import Replicate from 'replicate'
 import { createClient } from '@supabase/supabase-js'
-import { REPLICATE_MODELS } from './constants'
-
-const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_TOKEN,
-})
 
 function getSupabaseAdmin() {
   return createClient(
@@ -13,44 +7,53 @@ function getSupabaseAdmin() {
   )
 }
 
+interface UnsplashPhoto {
+  imageUrl: string
+  photographerName: string
+  photographerUrl: string
+}
+
 /**
- * Generate an image using Replicate's Flux model
+ * Search Unsplash for a photo matching the query
  */
-export async function generateImage(
-  prompt: string,
-  aspectRatio: '1:1' | '4:5' | '9:16' = '1:1'
-): Promise<string> {
-  const output = await replicate.run(REPLICATE_MODELS.flux, {
-    input: {
-      prompt: `${prompt}. High quality, professional photography style, vibrant colors, Instagram-worthy.`,
-      aspect_ratio: aspectRatio,
-      num_outputs: 1,
-      output_format: 'webp',
-      output_quality: 90,
-    },
+async function searchUnsplashPhoto(
+  query: string,
+  orientation: 'squarish' | 'landscape' | 'portrait' = 'squarish'
+): Promise<UnsplashPhoto> {
+  const params = new URLSearchParams({
+    query,
+    orientation,
+    per_page: '10',
   })
 
-  // Flux returns an array of FileOutput objects (Replicate SDK v1.x)
-  const results = output as unknown[]
-  if (!results || results.length === 0) {
-    throw new Error('No image generated from Replicate')
+  const res = await fetch(`https://api.unsplash.com/search/photos?${params}`, {
+    headers: { Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}` },
+  })
+
+  if (!res.ok) {
+    throw new Error(`Unsplash search failed: ${res.status}`)
   }
 
-  const imageOutput = results[0]
-  if (typeof imageOutput === 'string') {
-    return imageOutput
+  const data = await res.json()
+  if (!data.results || data.results.length === 0) {
+    throw new Error('No Unsplash results')
   }
 
-  // Handle FileOutput objects from Replicate SDK v1.x
-  // FileOutput has a .url() method and toString() that returns the URL
-  if (imageOutput && typeof imageOutput === 'object') {
-    const url = String(imageOutput)
-    if (url && url.startsWith('http')) {
-      return url
-    }
+  // Pick a random result from top 10 for variety
+  const photo = data.results[Math.floor(Math.random() * data.results.length)]
+
+  // Trigger download event per Unsplash ToS
+  if (photo.links?.download_location) {
+    fetch(photo.links.download_location, {
+      headers: { Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}` },
+    }).catch(() => {})
   }
 
-  throw new Error('Unexpected Replicate output format')
+  return {
+    imageUrl: photo.urls.regular,
+    photographerName: photo.user.name,
+    photographerUrl: photo.user.links.html,
+  }
 }
 
 /**
@@ -62,15 +65,14 @@ export async function downloadAndStoreImage(
 ): Promise<{ storagePath: string; publicUrl: string }> {
   const supabase = getSupabaseAdmin()
 
-  // Download the image
   const response = await fetch(imageUrl)
   if (!response.ok) {
     throw new Error(`Failed to download image: ${response.status}`)
   }
 
   const imageBuffer = await response.arrayBuffer()
-  const contentType = response.headers.get('content-type') || 'image/webp'
-  const extension = contentType.includes('png') ? 'png' : contentType.includes('jpeg') ? 'jpg' : 'webp'
+  const contentType = response.headers.get('content-type') || 'image/jpeg'
+  const extension = contentType.includes('png') ? 'png' : contentType.includes('webp') ? 'webp' : 'jpg'
 
   const storagePath = `posts/${postId}/image.${extension}`
 
@@ -96,13 +98,26 @@ export async function downloadAndStoreImage(
 }
 
 /**
- * Generate image and store in Supabase Storage
+ * Fetch a photo from Unsplash and store in Supabase Storage
  */
-export async function generateAndStoreImage(
-  prompt: string,
-  postId: string,
-  aspectRatio: '1:1' | '4:5' | '9:16' = '1:1'
-): Promise<{ storagePath: string; publicUrl: string }> {
-  const imageUrl = await generateImage(prompt, aspectRatio)
-  return downloadAndStoreImage(imageUrl, postId)
+export async function fetchAndStoreImage(
+  searchQuery: string,
+  postId: string
+): Promise<{ storagePath: string; publicUrl: string; unsplashAttribution: string }> {
+  let photo: UnsplashPhoto
+
+  try {
+    photo = await searchUnsplashPhoto(searchQuery)
+  } catch {
+    // Fallback to broader query if specific one returns nothing
+    photo = await searchUnsplashPhoto('Bali')
+  }
+
+  const { storagePath, publicUrl } = await downloadAndStoreImage(photo.imageUrl, postId)
+
+  return {
+    storagePath,
+    publicUrl,
+    unsplashAttribution: `Photo by ${photo.photographerName} on Unsplash (${photo.photographerUrl})`,
+  }
 }

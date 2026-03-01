@@ -26,7 +26,7 @@ function cleanJsonResponse(text: string): string {
 interface GeneratedContent {
   caption: string
   hashtags: string[]
-  imagePrompt: string
+  imageSearchQuery: string
   topic: string
 }
 
@@ -46,7 +46,7 @@ export async function generateContent(
 
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
-    max_tokens: 1500,
+    max_tokens: 500,
     messages: [
       {
         role: 'user',
@@ -56,13 +56,11 @@ ${captionPrompt}
 
 Topic: ${topic}
 
-Write it like a real Instagram post from someone who actually lives in Bali — not like a brand or AI. Vary your format: sometimes a short story, sometimes a quick thought, sometimes a longer explainer. Don't follow the same template every time.
-
 Respond in JSON:
 {
-  "caption": "The caption (max ${MAX_CAPTION_LENGTH} chars). Make it sound human. No listicles with emoji bullets. No generic hooks. Write like a real person.",
-  "hashtags": ["6-12", "relevant", "hashtags", "mix", "of", "niche", "and", "broad"],
-  "imagePrompt": "A photo-realistic image prompt. Think: the kind of photo someone would actually take in Bali with their phone. Natural lighting, real locations, candid feel. NO text overlays, NO graphic design, NO corporate stock photo vibes."
+  "caption": "1-2 sentences max (under ${MAX_CAPTION_LENGTH} chars). Sound human, not like AI.",
+  "hashtags": ["4-6", "relevant", "hashtags"],
+  "imageSearchQuery": "2-4 word Unsplash search query for a real photo (e.g. 'Bali temple sunrise', 'passport visa stamps')"
 }
 
 ${template?.hashtag_pool?.length ? `Include some of these hashtags: ${template.hashtag_pool.join(', ')}` : ''}
@@ -79,15 +77,14 @@ Return ONLY valid JSON, no markdown.`,
     return {
       caption: (parsed.caption || '').slice(0, MAX_CAPTION_LENGTH),
       hashtags: (parsed.hashtags || []).map((h: string) => h.replace(/^#/, '')),
-      imagePrompt: parsed.imagePrompt || `Professional image related to ${topic}, Bali tropical setting`,
+      imageSearchQuery: parsed.imageSearchQuery || `Bali ${topic.split(' ')[0]}`,
       topic,
     }
   } catch {
-    // Fallback if JSON parsing fails
     return {
       caption: responseText.slice(0, MAX_CAPTION_LENGTH),
       hashtags: ['balivisaassist', 'balivisa', 'bali'],
-      imagePrompt: `Professional image related to ${topic}, Bali tropical setting, clean modern design`,
+      imageSearchQuery: 'Bali tropical landscape',
       topic,
     }
   }
@@ -103,31 +100,23 @@ export async function generateNewsCaption(
 ): Promise<GeneratedContent> {
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
-    max_tokens: 1500,
+    max_tokens: 500,
     messages: [
       {
         role: 'user',
         content: `${BRAND_VOICE}
 
-Here's a news story. Turn it into a natural Instagram post — like you just read about it and want to share it with your followers in your own words. Don't make it sound like a press release.
+News story — turn it into a 1-2 sentence Instagram caption. React naturally, not like a press release.
 
 Title: ${newsTitle}
 Description: ${newsDescription}
 ${newsUrl ? `Source: ${newsUrl}` : ''}
 
-Guidelines:
-- React to the news like a real person would ("just saw this", "heads up everyone", "so this is interesting...")
-- Explain what it actually means in plain language
-- If it's Bali lifestyle news, tie it to the expat experience naturally
-- If it's immigration news, share what people should actually do about it
-- Don't force a sales pitch — if it makes sense to mention your services, do it casually
-- Keep it under ${MAX_CAPTION_LENGTH} characters
-
 Respond in JSON:
 {
-  "caption": "Your natural reaction to the news, written like a real person",
-  "hashtags": ["relevant", "hashtags", "without", "hash"],
-  "imagePrompt": "A photo-realistic image related to this news. Think editorial photography — candid Bali scenes, real places, natural lighting. NO text, NO graphics, NO stock photo feel."
+  "caption": "1-2 sentences max (under ${MAX_CAPTION_LENGTH} chars). Quick, natural reaction.",
+  "hashtags": ["4-6", "relevant", "hashtags"],
+  "imageSearchQuery": "2-4 word Unsplash search query for a real photo related to this news"
 }
 
 Return ONLY valid JSON, no markdown.`,
@@ -142,14 +131,14 @@ Return ONLY valid JSON, no markdown.`,
     return {
       caption: (parsed.caption || '').slice(0, MAX_CAPTION_LENGTH),
       hashtags: (parsed.hashtags || []).map((h: string) => h.replace(/^#/, '')),
-      imagePrompt: parsed.imagePrompt || 'Immigration news announcement, professional infographic style, teal and white',
+      imageSearchQuery: parsed.imageSearchQuery || 'Indonesia immigration office',
       topic: newsTitle,
     }
   } catch {
     return {
-      caption: `📢 Immigration Update: ${newsTitle}\n\n${newsDescription}\n\nNeed help understanding how this affects your visa? DM us or visit the link in our bio!\n\n#balivisaassist #indonesiavisa #immigrationnews`,
-      hashtags: ['balivisaassist', 'indonesiavisa', 'immigrationnews', 'balivisa', 'baliexpat'],
-      imagePrompt: 'Immigration news announcement, official document style, professional, Indonesia flag colors',
+      caption: `${newsTitle} — DM us if you need help with this.`,
+      hashtags: ['balivisaassist', 'indonesiavisa', 'immigrationnews', 'balivisa'],
+      imageSearchQuery: 'Indonesia immigration',
       topic: newsTitle,
     }
   }
@@ -165,23 +154,23 @@ export async function regenerateCaption(
 ): Promise<{ caption: string; hashtags: string[] }> {
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
-    max_tokens: 1500,
+    max_tokens: 500,
     messages: [
       {
         role: 'user',
         content: `${BRAND_VOICE}
 
-Rewrite this Instagram caption. It sounds too much like AI wrote it:
+Rewrite this caption to be 1-2 sentences max:
 
 "${currentCaption}"
 
 Category: ${category.replace('_', ' ')}
-${feedback ? `Feedback: ${feedback}` : 'Make it sound like a real person wrote it. Less polished, more authentic.'}
+${feedback ? `Feedback: ${feedback}` : 'Make it shorter and more human.'}
 
 Respond in JSON:
 {
-  "caption": "Rewritten caption (max ${MAX_CAPTION_LENGTH} chars) — should sound human and natural",
-  "hashtags": ["updated", "hashtags"]
+  "caption": "1-2 sentences (max ${MAX_CAPTION_LENGTH} chars)",
+  "hashtags": ["4-6", "hashtags"]
 }
 
 Return ONLY valid JSON, no markdown.`,

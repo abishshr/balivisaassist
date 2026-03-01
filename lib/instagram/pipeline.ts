@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { generateContent, generateNewsCaption } from './content-generator'
-import { generateAndStoreImage } from './image-generator'
+import { fetchAndStoreImage } from './image-generator'
 import { publishToInstagram } from './api'
 import { ensureValidToken } from './token-manager'
 import { WEEKLY_ROTATION } from './constants'
@@ -136,7 +136,7 @@ export async function generatePost(
       .update({
         caption: content.caption,
         hashtags: content.hashtags,
-        image_prompt: content.imagePrompt,
+        image_prompt: content.imageSearchQuery,
         status: 'image_pending',
       })
       .eq('id', post.id)
@@ -152,9 +152,9 @@ export async function generatePost(
         .eq('id', template.id)
     }
 
-    // Generate and store image
-    const { storagePath, publicUrl } = await generateAndStoreImage(
-      content.imagePrompt,
+    // Fetch photo from Unsplash and store
+    const { storagePath, publicUrl } = await fetchAndStoreImage(
+      content.imageSearchQuery,
       post.id
     )
 
@@ -226,14 +226,14 @@ export async function convertNewsToPost(
       .update({
         caption: content.caption,
         hashtags: content.hashtags,
-        image_prompt: content.imagePrompt,
+        image_prompt: content.imageSearchQuery,
         status: 'image_pending',
       })
       .eq('id', post.id)
 
-    // Generate and store image
-    const { storagePath, publicUrl } = await generateAndStoreImage(
-      content.imagePrompt,
+    // Fetch photo from Unsplash and store
+    const { storagePath, publicUrl } = await fetchAndStoreImage(
+      content.imageSearchQuery,
       post.id
     )
 
@@ -383,7 +383,7 @@ export async function retryPendingImages(): Promise<number> {
     try {
       if (!post.image_prompt) continue
 
-      const { storagePath, publicUrl } = await generateAndStoreImage(
+      const { storagePath, publicUrl } = await fetchAndStoreImage(
         post.image_prompt,
         post.id
       )

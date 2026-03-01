@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { regenerateCaption } from '@/lib/instagram/content-generator'
-import { generateAndStoreImage } from '@/lib/instagram/image-generator'
+import { fetchAndStoreImage } from '@/lib/instagram/image-generator'
 import type { ContentCategory } from '@/types/instagram'
 
 function getSupabaseAdmin() {
@@ -45,7 +45,7 @@ export async function POST(
 
     // Optionally regenerate image
     if (body.regenerate_image && post.image_prompt) {
-      const { storagePath, publicUrl } = await generateAndStoreImage(
+      const { storagePath, publicUrl } = await fetchAndStoreImage(
         post.image_prompt,
         post.id
       )
