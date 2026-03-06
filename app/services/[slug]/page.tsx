@@ -6,9 +6,10 @@ import { getServiceBySlug, services, PRICING_DISCLAIMER } from '@/data/services'
 import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { WhatsAppButton } from '@/components/common/WhatsAppButton';
-import { Card, CardBody } from '@/components/ui/Card';
 import { Accordion, AccordionItem } from '@/components/ui/Accordion';
-import { Badge } from '@/components/ui/Badge';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { serviceJsonLd, breadcrumbJsonLd, faqPageJsonLd } from '@/lib/structured-data';
+import { SEO } from '@/constants/company';
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;
@@ -25,14 +26,18 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const service = getServiceBySlug(slug);
 
   if (!service) {
-    return {
-      title: 'Service Not Found',
-    };
+    return { title: 'Service Not Found' };
   }
 
   return {
-    title: `${service.name} - BaliVisaAssist`,
+    title: service.name,
     description: service.description,
+    keywords: `${service.name}, Indonesia visa, Bali visa, ${service.category === 'extension' ? 'visa extension Indonesia' : service.category === 'permit' ? 'KITAS Indonesia' : service.category === 'business' ? 'PT PMA Indonesia' : 'Indonesia visa application'}`,
+    alternates: { canonical: `/services/${service.slug}` },
+    openGraph: {
+      title: service.name,
+      description: service.shortDescription,
+    },
   };
 }
 
@@ -46,56 +51,85 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   return (
     <div>
+      <JsonLd data={serviceJsonLd(service)} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Home', url: SEO.siteUrl },
+        { name: 'Services', url: `${SEO.siteUrl}/services` },
+        { name: service.name, url: `${SEO.siteUrl}/services/${service.slug}` },
+      ])} />
+      {service.faqs.length > 0 && <JsonLd data={faqPageJsonLd(service.faqs)} />}
       {/* Breadcrumb */}
-      <div className="bg-white/10 backdrop-blur-xl py-4 border-b border-white/20 relative z-10">
-        <div className="container mx-auto px-4">
+      <div className="pt-6 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-white hover:text-amber-300 font-semibold drop-shadow-md transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-[#0F4C5C] transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to All Services
+            <ArrowLeft className="w-3.5 h-3.5" />
+            All Services
           </Link>
         </div>
       </div>
 
-      {/* Service Header */}
-      <section className="py-16 sm:py-20 relative z-10">
+      {/* Header */}
+      <section className="pt-6 pb-8 sm:pt-8 sm:pb-10 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            {service.popular && (
-              <Badge variant="secondary" className="mb-4 bg-orange-500/90 text-white border-orange-400/50 shadow-lg">
-                Popular Choice
-              </Badge>
-            )}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-lg">
+          <div className="max-w-3xl">
+            {/* Badges */}
+            <div className="flex flex-wrap gap-2 mb-3">
+              {service.popular && (
+                <span className="text-[10px] font-semibold text-[#E07A5F] bg-[#E07A5F]/10 px-2 py-0.5 rounded-full">
+                  Popular
+                </span>
+              )}
+              {service.isExtension && (
+                <span className="text-[10px] font-semibold text-[#0F4C5C] bg-[#0F4C5C]/10 px-2 py-0.5 rounded-full">
+                  Extension
+                </span>
+              )}
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
               {service.name}
             </h1>
-            <p className="text-xl text-gray-200 mb-8 leading-relaxed drop-shadow-md">
+            <p className="text-gray-500 mb-8 leading-relaxed">
               {service.description}
             </p>
 
+            {/* Price / Duration / Processing row */}
             <div className="flex flex-wrap items-center gap-6 mb-8">
-              <div className="bg-white/15 backdrop-blur-xl rounded-2xl p-6 border border-white/30 shadow-xl">
-                <p className="text-sm text-gray-200 mb-2 font-semibold">Starting from</p>
-                <p className="text-4xl font-black text-white drop-shadow-lg">
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">From</p>
+                <p className="text-2xl font-bold text-gray-900">
                   {formatPrice(service.startingPrice)}
                 </p>
               </div>
-              <div className="h-12 w-px bg-white/30" />
-              <div className="flex items-center gap-3">
-                <Clock className="w-6 h-6 text-amber-400" />
+              <div className="h-8 w-px bg-gray-200" />
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-gray-400" />
                 <div>
-                  <p className="text-sm text-gray-200 font-semibold">Duration</p>
-                  <p className="font-bold text-white drop-shadow-md">{service.duration}</p>
+                  <p className="text-xs text-gray-400">Duration</p>
+                  <p className="text-sm font-medium text-gray-900">{service.duration}</p>
                 </div>
               </div>
+              {service.processingDays && (
+                <>
+                  <div className="h-8 w-px bg-gray-200" />
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-gray-400" />
+                    <div>
+                      <p className="text-xs text-gray-400">Processing</p>
+                      <p className="text-sm font-medium text-gray-900">{service.processingDays}</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <WhatsAppButton serviceId={service.id} fixed={false} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <WhatsAppButton serviceId={service.id} fixed={false} className="text-sm" />
               <Link href="/contact">
-                <Button variant="outline" className="w-full sm:w-auto bg-white/20 backdrop-blur-md border-2 border-white/40 text-white hover:bg-white/30 shadow-xl">
+                <Button variant="outline" className="w-full sm:w-auto text-sm">
                   Request Quote
                 </Button>
               </Link>
@@ -105,17 +139,17 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
 
       {/* Benefits */}
-      <section className="py-16 sm:py-20 relative z-10">
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
               Benefits & Features
             </h2>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
               {service.benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3 bg-white/10 backdrop-blur-lg rounded-2xl p-5 border border-white/20 hover:bg-white/15 transition-all duration-300">
-                  <CheckCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-white drop-shadow-sm">{benefit}</p>
+                <div key={index} className="flex items-start gap-2.5">
+                  <CheckCircle className="w-4 h-4 text-[#0F4C5C] flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-gray-600">{benefit}</p>
                 </div>
               ))}
             </div>
@@ -124,48 +158,42 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
 
       {/* Requirements */}
-      <section className="py-16 sm:py-20 relative z-10">
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
               Required Documents
             </h2>
-            <div className="bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 shadow-2xl">
-              <ul className="space-y-4">
-                {service.requirements.map((requirement, index) => (
-                  <li key={index} className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
-                      <span className="text-white text-sm font-bold">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <p className="text-white drop-shadow-sm pt-1">{requirement}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ol className="space-y-3">
+              {service.requirements.map((requirement, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full border border-[#0F4C5C] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-xs font-bold text-[#0F4C5C]">{index + 1}</span>
+                  </span>
+                  <p className="text-sm text-gray-600">{requirement}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* Process Steps */}
-      <section className="py-16 sm:py-20 relative z-10">
+      {/* Process */}
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-10 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
               Application Process
             </h2>
             <div className="space-y-6">
-              {service.process.map((step, index) => (
-                <div key={index} className="flex gap-5 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
-                  <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-xl">
-                      <span className="text-white font-black text-xl">{step.step}</span>
-                    </div>
-                  </div>
+              {service.process.map((step) => (
+                <div key={step.step} className="flex gap-4">
+                  <span className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-bold text-gray-900">{step.step}</span>
+                  </span>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2 drop-shadow-md">{step.title}</h3>
-                    <p className="text-gray-200 drop-shadow-sm">{step.description}</p>
+                    <h3 className="text-sm font-bold text-gray-900 mb-1">{step.title}</h3>
+                    <p className="text-sm text-gray-500">{step.description}</p>
                   </div>
                 </div>
               ))}
@@ -175,10 +203,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
 
       {/* FAQs */}
-      <section className="py-16 sm:py-20 relative z-10">
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
               Frequently Asked Questions
             </h2>
             <Accordion>
@@ -189,36 +217,33 @@ export default async function ServicePage({ params }: ServicePageProps) {
               ))}
             </Accordion>
 
-            <div className="mt-10 text-center">
-              <p className="text-gray-200 mb-4 drop-shadow-md">Still have questions?</p>
-              <Link href="/faq">
-                <Button variant="outline" className="bg-white/20 backdrop-blur-md border-2 border-white/40 text-white hover:bg-white/30 shadow-xl">View All FAQs</Button>
+            <div className="mt-8">
+              <Link
+                href="/faq"
+                className="text-sm font-medium text-gray-400 hover:text-[#0F4C5C] transition-colors"
+              >
+                View all FAQs &rarr;
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Note & CTA */}
-      <section className="py-16 sm:py-20 relative z-10">
+      {/* Bottom CTA */}
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-2xl p-6 mb-8 shadow-xl">
-              <p className="text-sm text-white drop-shadow-sm">
-                <strong className="text-amber-300">Note:</strong> {PRICING_DISCLAIMER}
-              </p>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-4 drop-shadow-lg">
-              Ready to Apply for Your {service.name}?
+          <div className="max-w-xl mx-auto text-center">
+            <p className="text-xs text-gray-400 mb-6 leading-relaxed">{PRICING_DISCLAIMER}</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+              Ready to apply?
             </h2>
-            <p className="text-xl text-gray-200 mb-8 drop-shadow-md">
-              Contact us today for a free consultation and personalized quote.
+            <p className="text-gray-500 mb-6">
+              Contact us for a free consultation and personalized quote.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <WhatsAppButton serviceId={service.id} fixed={false} />
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <WhatsAppButton serviceId={service.id} fixed={false} className="text-sm" />
               <Link href="/contact">
-                <Button variant="outline" className="bg-white/20 backdrop-blur-md border-2 border-white/40 text-white hover:bg-white/30 shadow-xl">Email Us</Button>
+                <Button variant="outline" className="w-full sm:w-auto text-sm">Email Us</Button>
               </Link>
             </div>
           </div>

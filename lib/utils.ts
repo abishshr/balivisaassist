@@ -34,6 +34,15 @@ export function formatPrice(amount: number, showCurrency: boolean = true): strin
 }
 
 /**
+ * Convert IDR to approximate USD and format
+ * Using approximate rate of 16,200 IDR per USD
+ */
+export function formatPriceUSD(amountIDR: number): string {
+  const usd = Math.round(amountIDR / 16200);
+  return `~$${usd}`;
+}
+
+/**
  * Format date to readable string
  * @param date - Date to format
  * @param format - Format style ('short', 'medium', 'long')

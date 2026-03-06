@@ -38,9 +38,9 @@ export const COMPANY = {
 } as const;
 
 export const SEO = {
-  defaultTitle: 'BaliVisaAssist - Indonesia Visa Services & KITAS Support',
-  defaultDescription: 'Professional visa assistance for Indonesia. C1 Visa, Retirement KITAS, Digital Nomad KITAS, Investor KITAS, and PT PMA sponsorship. Fast, reliable, compliant.',
-  defaultKeywords: 'Indonesia visa, Bali visa, KITAS, retirement visa Indonesia, digital nomad visa Bali, investor visa, PT PMA, visa sponsorship, C1 visa',
+  defaultTitle: 'BaliVisaAssist - Indonesia Visa Services, KITAS & Extensions',
+  defaultDescription: 'Professional visa assistance for Indonesia. 17 visa types including C1, C2, D12, KITAS, extensions, and PT PMA setup. Fast processing, transparent pricing, licensed agents.',
+  defaultKeywords: 'Indonesia visa, Bali visa, KITAS, retirement visa Indonesia, digital nomad visa Bali, investor visa, PT PMA, visa sponsorship, C1 visa, VOA extension, C2 business visa, D12 visa, visa extension Bali',
   siteUrl: 'https://balivisaassist.com',
   ogImage: '/images/og-image.webp',
 } as const;

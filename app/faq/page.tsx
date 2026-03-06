@@ -2,38 +2,43 @@ import { Metadata } from 'next';
 import { Accordion, AccordionItem } from '@/components/ui/Accordion';
 import { CTASection } from '@/components/sections/CTASection';
 import faqData from '@/data/faqs.json';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { faqPageJsonLd } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions - BaliVisaAssist',
-  description: 'Get answers to common questions about Indonesia visa services, processing times, pricing, and requirements. Expert guidance for all visa types.',
-  keywords: 'Indonesia visa FAQ, Bali visa questions, KITAS requirements, visa processing time Indonesia, visa costs Indonesia',
+  title: 'Frequently Asked Questions',
+  description: 'Get answers to common questions about Indonesia visa services, processing times, pricing, extensions, and requirements. Expert guidance for all 17 visa types.',
+  keywords: 'Indonesia visa FAQ, Bali visa questions, KITAS requirements, visa processing time Indonesia, visa costs Indonesia, VOA extension FAQ',
+  alternates: { canonical: '/faq' },
 };
+
+const allFaqs = faqData.categories.flatMap((cat) => cat.faqs);
 
 export default function FAQPage() {
   return (
     <div>
-      {/* Hero Section */}
-      <section className="py-20 sm:py-28 relative z-10">
+      <JsonLd data={faqPageJsonLd(allFaqs)} />
+      {/* Header */}
+      <section className="pt-12 pb-8 sm:pt-16 sm:pb-10 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-gray-200 leading-relaxed drop-shadow-md">
-              Find answers to common questions about our visa services, processing times,
-              pricing, and requirements.
+            <p className="text-lg text-gray-500">
+              Answers to common questions about visa services, processing, and requirements.
             </p>
           </div>
         </div>
       </section>
 
       {/* FAQ Categories */}
-      <section className="py-16 sm:py-20 relative z-10">
+      <section className="py-10 sm:py-14 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-12">
+          <div className="max-w-3xl space-y-12">
             {faqData.categories.map((category) => (
               <div key={category.id}>
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-8 drop-shadow-lg">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
                   {category.name}
                 </h2>
                 <Accordion>
@@ -53,22 +58,6 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Still Have Questions */}
-      <section className="py-16 sm:py-20 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 drop-shadow-lg">
-              Still Have Questions?
-            </h2>
-            <p className="text-xl text-gray-200 mb-8 drop-shadow-md">
-              Can't find the answer you're looking for? Our team is here to help you
-              with any questions about visa requirements and processes.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
       <CTASection />
     </div>
   );

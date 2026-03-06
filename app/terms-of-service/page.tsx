@@ -2,37 +2,36 @@ import { Metadata } from 'next';
 import legalData from '@/data/legal.json';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - BaliVisaAssist',
+  title: 'Terms of Service',
   description: 'Terms of Service for BaliVisaAssist, operated by CIPTA SOLUSI GLOBAL. Read our terms and conditions for using our visa assistance services.',
+  alternates: { canonical: '/terms-of-service' },
 };
 
 export default function TermsOfServicePage() {
   const { termsOfService } = legalData;
 
   return (
-    <div className="py-20 sm:py-28 relative z-10">
+    <div className="py-12 sm:py-16 relative z-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-lg">
+        <div className="max-w-3xl">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
             Terms of Service
           </h1>
-          <p className="text-gray-200 mb-10 drop-shadow-md">
+          <p className="text-xs text-gray-400 mb-10">
             Last Updated: {termsOfService.lastUpdated}
           </p>
 
-          <div className="bg-white/15 backdrop-blur-xl rounded-3xl p-8 sm:p-10 border border-white/30 shadow-2xl">
-            <div className="space-y-8">
-              {termsOfService.sections.map((section, index) => (
-                <div key={index}>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 drop-shadow-md">
-                    {section.title}
-                  </h2>
-                  <div className="text-gray-200 whitespace-pre-line leading-relaxed drop-shadow-sm">
-                    {section.content}
-                  </div>
+          <div className="space-y-10">
+            {termsOfService.sections.map((section, index) => (
+              <div key={index}>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">
+                  {section.title}
+                </h2>
+                <div className="text-sm text-gray-500 whitespace-pre-line leading-relaxed">
+                  {section.content}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

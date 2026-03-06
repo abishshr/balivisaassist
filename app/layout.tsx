@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { AnalyticsWrapper } from "@/components/analytics/AnalyticsWrapper";
 import { SEO } from "@/constants/company";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationJsonLd, localBusinessJsonLd } from "@/lib/structured-data";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: SEO.defaultTitle,
+  metadataBase: new URL(SEO.siteUrl),
+  title: {
+    template: '%s | BaliVisaAssist',
+    default: SEO.defaultTitle,
+  },
   description: SEO.defaultDescription,
   keywords: SEO.defaultKeywords,
   authors: [{ name: "BaliVisaAssist" }],
@@ -60,10 +62,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-transparent`}
+        className={`${jakarta.variable} antialiased bg-transparent`}
       >
         <MotionProvider>
           <AnalyticsWrapper />
+          <JsonLd data={organizationJsonLd()} />
+          <JsonLd data={localBusinessJsonLd()} />
           <PublicShell>{children}</PublicShell>
         </MotionProvider>
       </body>

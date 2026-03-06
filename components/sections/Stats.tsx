@@ -3,15 +3,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, CheckCircle, Clock } from 'lucide-react';
-import { StatsBackground } from '@/components/layout/BaliBackground';
 
 export const Stats = React.memo(function Stats() {
   const stats = [
     {
       icon: CheckCircle,
-      value: '100%',
-      label: 'Licensed',
-      description: 'Legal visa sponsor',
+      value: '17',
+      label: 'Visa Types',
+      description: 'Comprehensive coverage',
     },
     {
       icon: Clock,
@@ -21,7 +20,7 @@ export const Stats = React.memo(function Stats() {
     },
     {
       icon: TrendingUp,
-      value: '7',
+      value: '17',
       label: 'Visa Types',
       description: 'Comprehensive services',
     },
@@ -34,8 +33,7 @@ export const Stats = React.memo(function Stats() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 relative z-10">
-      <StatsBackground />
+    <section className="py-20 sm:py-28 relative z-10 bg-[#F5E6D3]/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -45,11 +43,11 @@ export const Stats = React.memo(function Stats() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-lg">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-4">
             Your Trusted Visa Partner
           </h2>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-            Professional, licensed visa services to help you make Bali your home. 🏝️
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Professional, licensed visa services to help you make Bali your home.
           </p>
         </motion.div>
 
@@ -62,54 +60,38 @@ export const Stats = React.memo(function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8, scale: 1.01, transition: { duration: 0.2, ease: 'easeOut' } }}
+              whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' } }}
             >
-              <div className="relative bg-white/15 backdrop-blur-xl rounded-3xl p-8 border border-white/30 hover:bg-white/20 transition-all duration-500 hover:shadow-3xl h-full group">
+              <div className="bg-white rounded-2xl p-8 border border-gray-200 hover:shadow-md hover:border-[#F5E6D3] transition-all duration-300 h-full group">
                 {/* Icon */}
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl"
+                  className="w-16 h-16 bg-gradient-to-br from-[#0F4C5C] to-[#1A6B7A] rounded-2xl flex items-center justify-center mb-6 shadow-md"
                 >
                   <stat.icon className="w-8 h-8 text-white" />
                 </motion.div>
 
                 {/* Number */}
                 <div className="mb-3">
-                  <h3 className="text-5xl sm:text-6xl font-black text-white drop-shadow-lg">
+                  <h3 className="text-5xl sm:text-6xl font-black text-gray-900">
                     {stat.value}
                   </h3>
                 </div>
 
                 {/* Label */}
-                <h4 className="text-lg font-bold text-white mb-2 drop-shadow-md">
+                <h4 className="text-lg font-bold text-gray-900 mb-2">
                   {stat.label}
                 </h4>
 
                 {/* Description */}
-                <p className="text-sm text-gray-200 drop-shadow-sm">
+                <p className="text-sm text-gray-500">
                   {stat.description}
                 </p>
-
-                {/* Gradient Overlay for Depth */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mt-12 sm:mt-16"
-        >
-          <p className="text-gray-200 text-base drop-shadow-md">
-            Start your journey to living your dream life in Bali 🌴
-          </p>
-        </motion.div>
       </div>
     </section>
   );

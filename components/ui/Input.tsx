@@ -15,7 +15,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="block text-sm font-semibold text-white mb-2">
+          <label htmlFor={inputId} className="block text-sm font-semibold text-gray-900 mb-2">
             {label}
             {props.required && <span className="text-red-500 ml-1" aria-label="required">*</span>}
           </label>
@@ -23,12 +23,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           id={inputId}
           className={cn(
-            'w-full px-4 py-3 h-12 border rounded-xl text-white placeholder-gray-400 bg-white/10 backdrop-blur-sm',
-            'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+            'w-full px-4 py-3 h-12 border rounded-xl text-gray-900 placeholder-gray-400 bg-white',
+            'focus:outline-none focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent',
             'transition-all duration-300',
             error
               ? 'border-red-500 focus:ring-red-500'
-              : 'border-white/30 hover:border-white/40',
+              : 'border-gray-300 hover:border-gray-400',
             className
           )}
           ref={ref}
@@ -62,7 +62,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={textareaId} className="block text-sm font-semibold text-white mb-2">
+          <label htmlFor={textareaId} className="block text-sm font-semibold text-gray-900 mb-2">
             {label}
             {props.required && <span className="text-red-500 ml-1" aria-label="required">*</span>}
           </label>
@@ -70,12 +70,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           id={textareaId}
           className={cn(
-            'w-full px-4 py-3 border rounded-xl text-white placeholder-gray-400 bg-white/10 backdrop-blur-sm',
-            'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+            'w-full px-4 py-3 border rounded-xl text-gray-900 placeholder-gray-400 bg-white',
+            'focus:outline-none focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent',
             'transition-all duration-300 resize-vertical min-h-[120px]',
             error
               ? 'border-red-500 focus:ring-red-500'
-              : 'border-white/30 hover:border-white/40',
+              : 'border-gray-300 hover:border-gray-400',
             className
           )}
           ref={ref}
@@ -110,7 +110,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={selectId} className="block text-sm font-semibold text-white mb-2">
+          <label htmlFor={selectId} className="block text-sm font-semibold text-gray-900 mb-2">
             {label}
             {props.required && <span className="text-red-500 ml-1" aria-label="required">*</span>}
           </label>
@@ -118,12 +118,12 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <select
           id={selectId}
           className={cn(
-            'w-full px-4 py-3 h-12 border rounded-xl text-white bg-white/10 backdrop-blur-sm',
-            'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent',
+            'w-full px-4 py-3 h-12 border rounded-xl text-gray-900 bg-white',
+            'focus:outline-none focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent',
             'transition-all duration-300',
             error
               ? 'border-red-500 focus:ring-red-500'
-              : 'border-white/30 hover:border-white/40',
+              : 'border-gray-300 hover:border-gray-400',
             className
           )}
           ref={ref}
@@ -132,7 +132,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
         >
           {options.map((option) => (
-            <option key={option.value} value={option.value} className="bg-gray-900 text-white">
+            <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}

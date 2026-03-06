@@ -21,6 +21,10 @@
           "answer": "We cannot guarantee visa approval as all final decisions are made by Indonesian immigration authorities. However, we have a high success rate and will only proceed with applications that meet the eligibility criteria."
         },
         {
+          "question": "How many visa types do you offer?",
+          "answer": "We offer 17 visa and permit services, including tourist visas, business visas, multi-entry visas, KITAS permits, visa extensions, and PT PMA company setup. Visit our Services page for the full list."
+        },
+        {
           "question": "How do I get started?",
           "answer": "Simply contact us via WhatsApp or fill out our contact form. Tell us which visa you're interested in, your nationality, and your timeline. We'll guide you through the entire process step by step."
         }
@@ -32,7 +36,7 @@
       "faqs": [
         {
           "question": "How long does visa processing take?",
-          "answer": "Processing times vary by visa type: VOA (same day), C1 Visa (3-5 business days), KITAS (4-8 weeks), PT PMA setup (4-6 weeks). We'll provide specific timelines based on your visa type."
+          "answer": "Processing times vary by visa type: VOA (same day), C1/C2 Visa (3-5 business days), D12 Visa (5 business days), KITAS (2-8 weeks), PT PMA setup (4-6 weeks). We'll provide specific timelines based on your visa type."
         },
         {
           "question": "Can you expedite my visa application?",
@@ -40,11 +44,11 @@
         },
         {
           "question": "What happens if my application is rejected?",
-          "answer": "Rejections are rare if all requirements are met. If your application is rejected, we'll work with you to understand the reason and explore alternative visa options. Refund policies vary by visa type."
+          "answer": "Rejections are rare if all requirements are met. If your application is rejected, we'll work with you to understand the reason and explore alternative visa options. Refund policies vary by visa type - see our Refund Policy page."
         },
         {
           "question": "Do I need to be in Indonesia to apply?",
-          "answer": "It depends on the visa type. Some visas (like C1) can be processed before you arrive. Others (like KITAS) may require you to be in Indonesia. We'll advise based on your specific visa."
+          "answer": "It depends on the visa type. Some visas (like C1, D12) can be processed before you arrive. Others (like KITAS) may require you to be in Indonesia. Extensions require you to be in the country. We'll advise based on your specific visa."
         }
       ]
     },
@@ -67,6 +71,36 @@
         {
           "question": "Do I pay upfront or after approval?",
           "answer": "Payment terms vary by visa type. Typically, we require a deposit to start processing, with the balance due upon approval or before visa issuance. We'll provide clear payment terms before you commit."
+        },
+        {
+          "question": "What is your refund policy?",
+          "answer": "Refund eligibility depends on the stage of processing and reason for cancellation. Please see our Refund Policy page for full details, or contact us for specific questions about your situation."
+        }
+      ]
+    },
+    {
+      "id": "extensions",
+      "name": "Visa Extensions",
+      "faqs": [
+        {
+          "question": "Can I extend my Visa on Arrival (VOA)?",
+          "answer": "Yes, the VOA can be extended once for 30 additional days (60 days total). Apply between 14 days before and 1 business day before expiry. You must visit the immigration office for biometrics. Our service fee for VOA extension starts from IDR 1,050,000."
+        },
+        {
+          "question": "How many times can I extend my C1 visa?",
+          "answer": "The C1 visa can be extended twice, each for 60 days. This gives you a maximum total stay of 180 days (60 + 60 + 60). Our C1 extension service starts from IDR 1,800,000 per extension."
+        },
+        {
+          "question": "Can I extend my D12 visa?",
+          "answer": "Yes, each D12 entry allows a 180-day stay that can be extended once for another 180 days (360 days total per entry). Our D12 extension service starts from IDR 4,200,000."
+        },
+        {
+          "question": "Do I need to visit the immigration office for extensions?",
+          "answer": "Yes, since 2025 all visa extensions require an in-person visit to the immigration office for biometric verification (fingerprints and photo). We schedule the appointment and guide you through the process."
+        },
+        {
+          "question": "What happens if my visa expires before the extension is processed?",
+          "answer": "Overstaying is a serious offense with penalties of approximately IDR 1,000,000 per day. Always apply for extensions well in advance - we recommend at least 14 days before expiry."
         }
       ]
     },

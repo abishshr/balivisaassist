@@ -2,100 +2,61 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Shield, Clock, CreditCard, FileCheck } from 'lucide-react';
+
+const highlights = [
+  {
+    icon: Shield,
+    title: 'Licensed & Registered',
+    description: 'Operated by CIPTA SOLUSI GLOBAL, a registered Indonesian company with full legal compliance.',
+  },
+  {
+    icon: FileCheck,
+    title: '17 Visa Types',
+    description: 'Tourist visas, business visas, KITAS, extensions, and PT PMA setup — all handled online.',
+  },
+  {
+    icon: Clock,
+    title: 'Fast Processing',
+    description: 'Most e-visas processed in 3-5 business days. We handle the paperwork so you don\'t have to.',
+  },
+  {
+    icon: CreditCard,
+    title: 'All-Inclusive Pricing',
+    description: 'Government fees, processing, and service fee included. No hidden charges — you get a quote upfront.',
+  },
+];
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Testimonials() {
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      role: 'Digital Nomad',
-      location: 'USA',
-      content: 'BaliVisaAssist made getting my digital nomad KITAS incredibly easy. Professional service from start to finish!',
-      rating: 5,
-      avatar: '👩🏼‍💼',
-    },
-    {
-      name: 'David Chen',
-      role: 'Retiree',
-      location: 'Singapore',
-      content: 'The team was patient with all my questions and guided me through every step. Highly recommend!',
-      rating: 5,
-      avatar: '👨🏻‍🦳',
-    },
-    {
-      name: 'Maria Garcia',
-      role: 'Investor',
-      location: 'Spain',
-      content: 'Professional service for my investor KITAS. They know the system well and saved me time.',
-      rating: 5,
-      avatar: '👩🏽‍💼',
-    },
-  ];
-
   return (
-    <section className="py-20 sm:py-28 relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+    <section className="py-16 sm:py-20 relative z-10 border-t border-gray-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5, ease }}
+          className="text-2xl sm:text-3xl font-bold text-gray-900 mb-10 text-center"
         >
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-lg">
-            What Our Clients Say
-          </h2>
-          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
-            Real experiences from people living their Bali dream
-          </p>
-        </motion.div>
+          Why Work With Us
+        </motion.h2>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {highlights.map((item, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
+              key={item.title}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative bg-white/5 backdrop-blur-3xl rounded-3xl p-8 border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 overflow-hidden shadow-2xl"
+              transition={{ duration: 0.5, delay: index * 0.1, ease }}
+              className="flex gap-4 p-5 rounded-xl border border-gray-200 bg-white"
             >
-              {/* iOS-style glass reflections */}
-              <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-3xl"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
-
-              {/* Rating */}
-              <div className="flex gap-1 mb-4 relative z-10">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-amber-400 fill-current drop-shadow-lg"
-                  />
-                ))}
-              </div>
-
-              {/* Content */}
-              <p className="text-white mb-6 leading-relaxed text-lg relative z-10 drop-shadow-md">
-                "{testimonial.content}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-white/20 relative z-10">
-                <div className="relative w-12 h-12 bg-gradient-to-br from-amber-500/90 via-amber-400/80 to-orange-500/90 rounded-full flex items-center justify-center text-2xl shadow-xl border border-white/30 overflow-hidden">
-                  {/* Glass reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-full"></div>
-                  <span className="relative z-10">{testimonial.avatar}</span>
-                </div>
-                <div>
-                  <div className="font-bold text-white">
-                    {testimonial.name}
-                  </div>
-                  <div className="text-sm text-gray-300">
-                    {testimonial.role} • {testimonial.location}
-                  </div>
-                </div>
+              <item.icon className="w-5 h-5 text-[#0F4C5C] flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-1">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.description}</p>
               </div>
             </motion.div>
           ))}

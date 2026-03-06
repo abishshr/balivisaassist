@@ -2,18 +2,30 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { COMPANY } from '@/constants/company';
 import { cn } from '@/lib/utils';
 
+const navigation = [
+  { name: 'Services', href: '/services' },
+  { name: 'News', href: '/news' },
+  { name: 'FAQ', href: '/faq' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
+
 export function Header() {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Only use transparent mode on homepage
+  const showSolid = !isHome || isScrolled;
+
   useEffect(() => {
     let ticking = false;
-
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -23,82 +35,78 @@ export function Header() {
         ticking = true;
       }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'News', href: '/news' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ];
-
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <header
       className={cn(
         'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
-        isScrolled
-          ? 'bg-white/5 backdrop-blur-2xl shadow-2xl border-b border-white/20'
-          : 'bg-white/3 backdrop-blur-2xl border-b border-white/15'
+        showSolid
+          ? 'bg-white/95 backdrop-blur-md border-b border-gray-100'
+          : 'bg-transparent'
       )}
-      style={{ willChange: 'auto', transform: 'translateZ(0)' }}
     >
-      {/* iOS-style glass reflection */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex items-center justify-between h-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-11 h-11 bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 rounded-lg flex items-center justify-center shadow-xl logo-sparkle"
-            >
-              {/* Very subtle glow effect */}
-              <div className="absolute inset-0 bg-amber-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-              <div className="absolute inset-0 bg-white/20 rounded-lg backdrop-blur-sm"></div>
-              <span className="relative text-white font-black text-2xl drop-shadow-lg z-10">B</span>
-            </motion.div>
-            <span className="text-xl font-black text-white drop-shadow-lg">
-              BaliVisa<span className="text-amber-300 drop-shadow-lg">Assist</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className={cn(
+              'w-8 h-8 rounded-lg flex items-center justify-center',
+              showSolid ? 'bg-[#0F4C5C]' : 'bg-white/10'
+            )}>
+              <span className="text-white font-bold text-sm">B</span>
+            </div>
+            <span className={cn(
+              'text-base font-bold transition-colors duration-300',
+              showSolid ? 'text-gray-900' : 'text-white'
+            )}>
+              BaliVisa<span className="text-[#E07A5F]">Assist</span>
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative px-3 py-2 text-white hover:text-amber-300 font-bold transition-all duration-300 hover:bg-white/10 backdrop-blur-xl rounded-2xl hover:shadow-lg group overflow-hidden"
+                className={cn(
+                  'px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-lg',
+                  showSolid
+                    ? 'text-gray-500 hover:text-gray-900'
+                    : 'text-white/70 hover:text-white'
+                )}
               >
-                <span className="relative z-10">{item.name}</span>
-                {/* Glass reflection on hover */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                {item.name}
               </Link>
             ))}
+            <Link
+              href="/services"
+              className={cn(
+                'ml-3 px-4 py-1.5 text-sm font-semibold rounded-lg transition-colors duration-200',
+                showSolid
+                  ? 'bg-[#0F4C5C] text-white hover:bg-[#0D3F4D]'
+                  : 'bg-white text-gray-900 hover:bg-gray-100'
+              )}
+            >
+              Get Started
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2.5 text-white hover:text-amber-300 transition-all hover:bg-white/15 backdrop-blur-xl rounded-2xl hover:shadow-lg border border-white/20"
+            className={cn(
+              'md:hidden p-2 transition-colors rounded-lg',
+              showSolid
+                ? 'text-gray-500 hover:text-gray-900'
+                : 'text-white/70 hover:text-white'
+            )}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6 drop-shadow-lg" />
-            ) : (
-              <Menu className="w-6 h-6 drop-shadow-lg" />
-            )}
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -110,28 +118,31 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-white/5 backdrop-blur-3xl border-t border-white/20 shadow-2xl relative overflow-hidden"
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-t border-gray-100"
           >
-            {/* iOS-style glass reflection */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none"></div>
-            <nav className="container mx-auto px-4 py-4 flex flex-col space-y-2 relative">
+            <nav className="container mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="relative px-4 py-3 text-white hover:text-amber-300 hover:bg-white/15 backdrop-blur-xl font-bold transition-all rounded-2xl hover:shadow-lg border border-white/10 overflow-hidden group"
+                  className="px-3 py-2.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium transition-colors rounded-lg"
                 >
-                  <span className="relative z-10">{item.name}</span>
-                  {/* Glass reflection on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                  {item.name}
                 </Link>
               ))}
+              <Link
+                href="/services"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-1 px-3 py-2.5 bg-[#0F4C5C] text-white text-sm font-semibold text-center rounded-lg"
+              >
+                Get Started
+              </Link>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

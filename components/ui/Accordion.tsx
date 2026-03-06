@@ -16,19 +16,19 @@ export function AccordionItem({ title, children, defaultOpen = false }: Accordio
   const buttonId = `accordion-button-${title.replace(/\s+/g, '-').toLowerCase()}`;
 
   return (
-    <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-2xl overflow-hidden shadow-xl hover:bg-white/20 transition-all duration-300">
+    <div className="bg-white border border-gray-200 rounded-2xl transition-colors duration-200">
       <button
         id={buttonId}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 text-left transition-colors"
+        className="w-full flex items-center justify-between p-5 sm:p-6 text-left group"
         aria-expanded={isOpen}
         aria-controls={contentId}
       >
-        <span className="font-bold text-white drop-shadow-md">{title}</span>
+        <span className="font-bold text-gray-900 group-hover:text-[#0F4C5C] transition-colors text-sm sm:text-base">{title}</span>
         <ChevronDown
           className={cn(
-            'w-6 h-6 text-gray-200 transition-transform duration-300',
-            isOpen && 'transform rotate-180'
+            'w-5 h-5 text-gray-400 transition-transform duration-200 flex-shrink-0 ml-4',
+            isOpen && 'rotate-180'
           )}
           aria-hidden="true"
         />
@@ -38,9 +38,9 @@ export function AccordionItem({ title, children, defaultOpen = false }: Accordio
           id={contentId}
           role="region"
           aria-labelledby={buttonId}
-          className="px-6 pb-6"
+          className="px-5 sm:px-6 pb-5 sm:pb-6"
         >
-          <div className="pt-4 border-t border-white/20 text-gray-100 drop-shadow-sm">{children}</div>
+          <div className="pt-3 border-t border-gray-100 text-sm text-gray-500 leading-relaxed">{children}</div>
         </div>
       )}
     </div>

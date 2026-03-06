@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { services } from '@/data/services';
 import { SEO } from '@/constants/company';
+import { countries } from '@/data/countries';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SEO.siteUrl;
@@ -38,6 +39,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/news`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/refund-policy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
+    {
       url: `${baseUrl}/privacy-policy`,
       lastModified: new Date(),
       changeFrequency: 'yearly' as const,
@@ -59,5 +72,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...servicePages];
+  // Country-specific pages
+  const countryPages = countries.map((country) => ({
+    url: `${baseUrl}/visa-by-country/${country.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...servicePages, ...countryPages];
 }

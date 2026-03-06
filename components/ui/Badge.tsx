@@ -8,27 +8,25 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export function Badge({ variant = 'primary', className, children, ...props }: BadgeProps) {
   const variants = {
-    primary: 'bg-amber-500/90 text-white border-amber-400/50',
-    secondary: 'bg-orange-500/90 text-white border-orange-400/50',
-    success: 'bg-green-500/90 text-white border-green-400/50',
-    warning: 'bg-yellow-500/90 text-white border-yellow-400/50',
-    info: 'bg-blue-500/90 text-white border-blue-400/50',
-    default: 'bg-slate-500/90 text-white border-slate-400/50',
-    destructive: 'bg-red-500/90 text-white border-red-400/50',
+    primary: 'bg-[#0F4C5C]/10 text-[#0F4C5C] border-[#0F4C5C]/20',
+    secondary: 'bg-[#E07A5F]/10 text-[#E07A5F] border-[#E07A5F]/20',
+    success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    warning: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+    info: 'bg-[#0F4C5C]/10 text-[#0F4C5C] border-[#0F4C5C]/20',
+    default: 'bg-gray-100 text-gray-700 border-gray-200',
+    destructive: 'bg-red-50 text-red-700 border-red-200',
   };
 
   return (
     <span
       className={cn(
-        'relative inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-xl shadow-lg overflow-hidden',
+        'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border',
         variants[variant],
         className
       )}
       {...props}
     >
-      {/* Glass reflection */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent rounded-full pointer-events-none"></div>
-      <span className="relative z-10">{children}</span>
+      {children}
     </span>
   );
 }

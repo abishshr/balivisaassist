@@ -1,140 +1,102 @@
 import { Metadata } from 'next';
-import { Mail, MessageCircle, MapPin } from 'lucide-react';
+import { Mail, MessageCircle, MapPin, Clock } from 'lucide-react';
 import { COMPANY } from '@/constants/company';
-import { Card, CardBody } from '@/components/ui/Card';
 import { WhatsAppButton } from '@/components/common/WhatsAppButton';
 
 export const metadata: Metadata = {
-  title: 'Contact Us - BaliVisaAssist',
-  description: 'Get in touch with BaliVisaAssist for visa assistance in Indonesia. Contact us via WhatsApp, email, or fill out our contact form for a free consultation.',
+  title: 'Contact Us',
+  description: 'Get in touch with BaliVisaAssist for visa assistance in Indonesia. Contact us via WhatsApp, email, or visit our office in Canggu, Bali.',
   keywords: 'contact BaliVisaAssist, Indonesia visa inquiry, Bali visa consultation, visa help Indonesia',
+  alternates: { canonical: '/contact' },
 };
 
 export default function ContactPage() {
-  const contactMethods = [
-    {
-      icon: MessageCircle,
-      title: 'WhatsApp',
-      description: 'Fastest way to reach us. We typically respond within 2 hours during business hours.',
-      action: 'Chat on WhatsApp',
-      color: 'green',
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      description: 'Send us a detailed inquiry and we\'ll respond within 24 hours.',
-      value: COMPANY.email,
-      href: `mailto:${COMPANY.email}`,
-      action: 'Send Email',
-      color: 'blue',
-    },
-  ];
-
   return (
     <div>
-      {/* Hero Section */}
-      <section className="py-20 sm:py-28 relative z-10">
+      {/* Header */}
+      <section className="pt-12 pb-8 sm:pt-16 sm:pb-10 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-lg">
+          <div className="max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
               Get in Touch
             </h1>
-            <p className="text-xl text-gray-200 leading-relaxed drop-shadow-md">
-              Have questions about visa requirements or our services? We're here to help.
-              Choose your preferred contact method below.
+            <p className="text-lg text-gray-500">
+              Questions about visas or our services? We&apos;re here to help.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Methods */}
-      <section className="py-16 sm:py-20 relative z-10">
+      <section className="py-10 sm:py-14 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-10 text-center drop-shadow-lg">
-              Contact Methods
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
-              {contactMethods.map((method, index) => (
-                <Card key={index}>
-                  <CardBody>
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
-                      <method.icon className="w-7 h-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-3 drop-shadow-md">
-                      {method.title}
-                    </h3>
-                    <p className="text-gray-200 mb-4 drop-shadow-sm">{method.description}</p>
-                    {method.value && (
-                      <p className="text-sm font-semibold text-amber-300 mb-4 drop-shadow-sm">
-                        {method.value}
-                      </p>
-                    )}
-                    {method.title === 'WhatsApp' ? (
-                      <WhatsAppButton fixed={false} />
-                    ) : (
-                      <a
-                        href={method.href}
-                        className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-400 font-bold transition-colors drop-shadow-sm"
-                      >
-                        {method.action} →
-                      </a>
-                    )}
-                  </CardBody>
-                </Card>
-              ))}
+          <div className="max-w-3xl">
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* WhatsApp */}
+              <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <MessageCircle className="w-5 h-5 text-[#0F4C5C] mb-4" />
+                <h3 className="text-sm font-bold text-gray-900 mb-1">WhatsApp</h3>
+                <p className="text-xs text-gray-400 mb-4">
+                  Fastest way to reach us. We respond within 2 hours during business hours.
+                </p>
+                <WhatsAppButton fixed={false} className="text-sm" />
+              </div>
+
+              {/* Email */}
+              <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <Mail className="w-5 h-5 text-[#0F4C5C] mb-4" />
+                <h3 className="text-sm font-bold text-gray-900 mb-1">Email</h3>
+                <p className="text-xs text-gray-400 mb-4">
+                  Send a detailed inquiry. We respond within 24 hours.
+                </p>
+                <a
+                  href={`mailto:${COMPANY.email}`}
+                  className="text-sm font-medium text-[#0F4C5C] hover:underline"
+                >
+                  {COMPANY.email}
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Business Hours & Info */}
-      <section className="py-16 sm:py-20 relative z-10">
+      {/* Info */}
+      <section className="py-10 sm:py-14 relative z-10 border-t border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-10 text-center drop-shadow-lg">
-              Business Information
+          <div className="max-w-3xl">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-6">
+              Details
             </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card>
-                <CardBody>
-                  <h3 className="font-bold text-white mb-3 drop-shadow-md">
-                    Business Hours
-                  </h3>
-                  <p className="text-gray-200 drop-shadow-sm">{COMPANY.businessHours}</p>
-                  <p className="text-sm text-gray-300 mt-2 drop-shadow-sm">
-                    Weekend inquiries will be responded to on the next business day.
+            <div className="grid sm:grid-cols-3 gap-8">
+              <div className="flex gap-3">
+                <MapPin className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1">Office</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    Pantai Batu Bolong St, 38<br />
+                    Canggu, Bali
                   </p>
-                </CardBody>
-              </Card>
-
-              <Card>
-                <CardBody>
-                  <h3 className="font-bold text-white mb-3 drop-shadow-md">
-                    Legal Entity
-                  </h3>
-                  <p className="text-gray-200 mb-2 drop-shadow-sm">
-                    <strong className="text-white">{COMPANY.legalName}</strong>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <Clock className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1">Hours</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    {COMPANY.businessHours}
                   </p>
-                  <p className="text-sm text-gray-300 drop-shadow-sm">
-                    Licensed visa assistance provider in Indonesia
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <Mail className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1">Legal Entity</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    {COMPANY.legalName}
                   </p>
-                </CardBody>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Note */}
-      <section className="py-16 sm:py-20 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white/15 backdrop-blur-xl border border-white/30 rounded-2xl p-6 text-center shadow-xl">
-              <p className="text-sm text-white drop-shadow-sm">
-                <strong className="text-amber-300">Please note:</strong> For the fastest response, we recommend contacting
-                us via WhatsApp. Email inquiries are answered within 24 hours during business days.
-              </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
