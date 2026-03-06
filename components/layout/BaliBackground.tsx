@@ -29,7 +29,7 @@ export function BaliWatermark() {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover hidden md:block"
+        className="absolute inset-0 w-full h-full object-cover"
       >
         <source src="/videos/bali-hero.mp4?v=3" type="video/mp4" />
       </video>
