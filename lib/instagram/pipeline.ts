@@ -299,11 +299,19 @@ export async function publishApprovedPosts(): Promise<number> {
         continue
       }
 
-      // Mark as publishing
-      await supabase
+      // Atomically claim the post — only update if still 'approved' to prevent duplicates
+      const { data: claimed } = await supabase
         .from('instagram_posts')
         .update({ status: 'publishing' })
         .eq('id', post.id)
+        .eq('status', 'approved')
+        .select('id')
+        .single()
+
+      if (!claimed) {
+        // Another process already claimed this post
+        continue
+      }
 
       // Build full caption with hashtags
       const hashtagString = (post.hashtags as string[])
