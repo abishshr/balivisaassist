@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   return {
     title: `Indonesia Visa for ${country.demonym} Citizens`,
-    description: `Complete guide to Indonesia visas for ${country.demonym} citizens. ${country.voaEligible ? 'VOA eligible.' : ''} Tourist visas, business visas, KITAS, extensions & more.`,
+    description: `Complete guide to Indonesia visas for ${country.demonym} citizens. ${country.voaEligible ? 'B1 eligible.' : ''} Tourist visas, business visas, KITAS, extensions & more.`,
     keywords: `Indonesia visa ${country.name}, ${country.demonym} visa Indonesia, Bali visa ${country.name}`,
     alternates: { canonical: `/visa-by-country/${country.slug}` },
   };
@@ -100,14 +100,14 @@ export default async function CountryPage({ params }: CountryPageProps) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
-              {country.voaEligible ? 'VOA Eligible' : 'Visa Required'}
+              {country.voaEligible ? 'B1 Eligible' : 'Visa Required'}
             </p>
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
               Indonesia Visa for {country.demonym} Citizens
             </h1>
             <p className="text-lg text-gray-500">
               {country.voaEligible
-                ? `Citizens of ${country.name} are eligible for Visa on Arrival. We also offer ${availableServices.length} visa services.`
+                ? `Citizens of ${country.name} are eligible for B1 Visa on Arrival. We also offer ${availableServices.length} visa services.`
                 : `Complete visa assistance for ${country.name} citizens. ${availableServices.length} services available.`
               }
             </p>
@@ -115,7 +115,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {/* VOA Notice */}
+      {/* B1 Notice */}
       {country.voaEligible && (
         <section className="pb-8 relative z-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,7 +123,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
               <div className="flex items-start gap-3 bg-green-50 border border-green-200 rounded-2xl p-5">
                 <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-green-700">
-                  {country.demonym} citizens can enter with a Visa on Arrival (30 days, extendable to 60) for IDR 500,000. No pre-application needed.
+                  {country.demonym} citizens can enter with a B1 Visa on Arrival (30 days, extendable to 60) for IDR 500,000. No pre-application needed.
                 </p>
               </div>
             </div>

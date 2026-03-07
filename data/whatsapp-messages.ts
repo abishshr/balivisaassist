@@ -65,10 +65,10 @@ My details:
 Please advise on the process and requirements. Thank you!`,
   },
   {
-    serviceId: 'voa-visa',
+    serviceId: 'b1-visa',
     message: `Hi BaliVisaAssist! 👋
 
-I'm interested in *VOA Visa assistance* and/or extension.
+I'm interested in *B1 Visa assistance* and/or extension.
 
 My details:
 - Nationality: [Your nationality]

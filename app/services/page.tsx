@@ -5,7 +5,7 @@ import { ServiceCard } from '@/components/services/ServiceCard';
 export const metadata: Metadata = {
   title: 'Visa Services & Pricing',
   description: 'Comprehensive visa services for Indonesia. 17 visa types including C1, C2, D12, KITAS, extensions, and PT PMA setup. Transparent pricing, fast processing.',
-  keywords: 'Indonesia visa services, Bali visa pricing, KITAS cost, retirement visa Indonesia price, digital nomad visa Bali, visa fees Indonesia, VOA extension, C1 extension',
+  keywords: 'Indonesia visa services, Bali visa pricing, KITAS cost, retirement visa Indonesia price, digital nomad visa Bali, visa fees Indonesia, B1 extension, C1 extension',
   alternates: { canonical: '/services' },
 };
 

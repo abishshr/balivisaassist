@@ -25,7 +25,7 @@ export const TOPIC_POOLS: Record<ContentCategory, string[]> = {
     'B211A visa application process and requirements',
     'KITAS (temporary stay permit) guide for expats',
     'KITAP (permanent stay permit) eligibility',
-    'Tourist visa extension (VOA to 60 days)',
+    'Tourist visa extension (B1 to 60 days)',
     'E-visa vs visa on arrival differences',
     'Visa overstay penalties and how to avoid them',
     'Documents needed for Indonesia visa applications',

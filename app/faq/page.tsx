@@ -8,7 +8,7 @@ import { faqPageJsonLd } from '@/lib/structured-data';
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description: 'Get answers to common questions about Indonesia visa services, processing times, pricing, extensions, and requirements. Expert guidance for all 17 visa types.',
-  keywords: 'Indonesia visa FAQ, Bali visa questions, KITAS requirements, visa processing time Indonesia, visa costs Indonesia, VOA extension FAQ',
+  keywords: 'Indonesia visa FAQ, Bali visa questions, KITAS requirements, visa processing time Indonesia, visa costs Indonesia, B1 extension FAQ',
   alternates: { canonical: '/faq' },
 };
 

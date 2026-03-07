@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, MessageCircle } from 'lucide-react';
+import { Mail, MessageCircle, Instagram } from 'lucide-react';
 import { COMPANY } from '@/constants/company';
 
 const footerLinks = {
@@ -8,14 +8,14 @@ const footerLinks = {
     { name: 'C1 Tourist Visa', href: '/services/c1-visa' },
     { name: 'C2 Business Visa', href: '/services/c2-business-visa' },
     { name: 'D12 Pre-Investment', href: '/services/d12-visa-1year' },
-    { name: 'VOA Visa', href: '/services/voa-visa' },
+    { name: 'B1 Visa', href: '/services/b1-visa' },
     { name: 'All Services', href: '/services' },
   ],
   permits: [
     { name: 'Retirement KITAS', href: '/services/retirement-kitas' },
     { name: 'Digital Nomad KITAS', href: '/services/digital-nomad-kitas' },
     { name: 'Working KITAS', href: '/services/investor-kitas' },
-    { name: 'VOA Extension', href: '/services/voa-extension' },
+    { name: 'B1 Extension', href: '/services/b1-extension' },
     { name: 'PT PMA Setup', href: '/services/pt-pma' },
   ],
   company: [
@@ -90,6 +90,17 @@ export function Footer() {
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   WhatsApp
+                </a>
+              )}
+              {COMPANY.social.instagram && (
+                <a
+                  href={`https://instagram.com/${COMPANY.social.instagram}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  <Instagram className="w-3.5 h-3.5" />
+                  Instagram
                 </a>
               )}
             </div>
