@@ -6,6 +6,7 @@ import {
   ServiceAgreementDocument,
   type AgreementData,
   type AgreementCompanyInfo,
+  type AgreementLanguage,
 } from '@/lib/pdf/service-agreement-template'
 import React from 'react'
 
@@ -29,6 +30,7 @@ export async function POST(request: NextRequest) {
       serviceName,
       serviceDescription,
       quotedPrice,
+      language,
     } = body as {
       customerName: string
       nationality: string
@@ -38,6 +40,7 @@ export async function POST(request: NextRequest) {
       serviceName: string
       serviceDescription: string
       quotedPrice: string
+      language: AgreementLanguage
     }
 
     if (!customerName || !passportNumber || !serviceName) {
@@ -68,6 +71,7 @@ export async function POST(request: NextRequest) {
       serviceName,
       serviceDescription: serviceDescription || '',
       quotedPrice: quotedPrice || '',
+      language: language || 'en',
     }
 
     const companyInfo: AgreementCompanyInfo = {

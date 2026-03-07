@@ -26,15 +26,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: 'Helvetica-Bold',
     textAlign: 'center',
-    marginBottom: 1,
-    textTransform: 'uppercase',
-  },
-  subtitle: {
-    fontSize: 9,
-    textAlign: 'center',
     marginBottom: 12,
-    color: '#555',
-    fontFamily: 'Helvetica-Oblique',
+    textTransform: 'uppercase',
   },
   metaRow: {
     flexDirection: 'row',
@@ -55,13 +48,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     textAlign: 'justify',
     fontSize: 9,
-  },
-  paragraphItalic: {
-    marginBottom: 4,
-    textAlign: 'justify',
-    fontSize: 9,
-    fontFamily: 'Helvetica-Oblique',
-    color: '#444',
   },
   infoTable: {
     marginBottom: 6,
@@ -97,12 +83,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 9,
   },
-  bulletTextItalic: {
-    flex: 1,
-    fontSize: 9,
-    fontFamily: 'Helvetica-Oblique',
-    color: '#444',
-  },
   signatureRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -132,6 +112,89 @@ const styles = StyleSheet.create({
   },
 })
 
+export type AgreementLanguage = 'en' | 'id'
+
+const t = {
+  en: {
+    title: 'SERVICE AGREEMENT',
+    date: 'Date',
+    preamble: 'This Service Agreement ("Agreement") is entered into by and between:',
+    partyI: 'Party I — Service Provider',
+    partyII: 'Party II — Client',
+    companyName: 'Company Name',
+    nib: 'NIB',
+    address: 'Address',
+    representedBy: 'Represented by',
+    fullName: 'Full Name',
+    nationality: 'Nationality',
+    passport: 'Passport Number',
+    whatsapp: 'WhatsApp',
+    email: 'Email',
+    article1Title: 'Article 1 — Scope of Service',
+    article1Body: 'Party I agrees to provide the following service to Party II:',
+    service: 'Service',
+    description: 'Description',
+    quotedPrice: 'Quoted Price',
+    article2Title: 'Article 2 — Payment Terms',
+    article2Body: 'Full payment is required before processing begins.',
+    paymentMethods: 'Accepted payment methods:',
+    cash: 'Cash',
+    article3Title: 'Article 3 — Client Responsibilities',
+    article3Body: 'Party II agrees to:',
+    resp1: 'Provide accurate and complete documents as requested',
+    resp2: 'Respond to requests for information in a timely manner',
+    resp3: 'Ensure passport is valid for a minimum of 6 months',
+    article4Title: 'Article 4 — No Guarantee',
+    article4Body: 'Party I provides professional visa assistance services only. Final approval or rejection of any visa application is at the sole discretion of the Directorate General of Immigration of the Republic of Indonesia. Party I does not guarantee approval of any application.',
+    article5Title: 'Article 5 — Refund Policy',
+    article5Body: 'Refunds are handled on a case-by-case basis at the sole discretion of Party I. Government fees paid to immigration authorities are non-refundable under any circumstances.',
+    article6Title: 'Article 6 — Governing Law',
+    article6Body: 'This Agreement is governed by the laws of the Republic of Indonesia. Any disputes shall be resolved in the courts of Bali, Indonesia.',
+    sigPartyI: 'Party I',
+    sigPartyII: 'Party II',
+    signature: 'Signature',
+  },
+  id: {
+    title: 'PERJANJIAN LAYANAN',
+    date: 'Tanggal',
+    preamble: 'Perjanjian Layanan ini ("Perjanjian") ditandatangani oleh dan antara:',
+    partyI: 'Pihak I — Penyedia Layanan',
+    partyII: 'Pihak II — Klien',
+    companyName: 'Nama Perusahaan',
+    nib: 'NIB',
+    address: 'Alamat',
+    representedBy: 'Diwakili oleh',
+    fullName: 'Nama Lengkap',
+    nationality: 'Kewarganegaraan',
+    passport: 'Nomor Paspor',
+    whatsapp: 'WhatsApp',
+    email: 'Email',
+    article1Title: 'Pasal 1 — Ruang Lingkup Layanan',
+    article1Body: 'Pihak I setuju untuk memberikan layanan berikut kepada Pihak II:',
+    service: 'Layanan',
+    description: 'Deskripsi',
+    quotedPrice: 'Harga',
+    article2Title: 'Pasal 2 — Ketentuan Pembayaran',
+    article2Body: 'Pembayaran penuh diperlukan sebelum proses dimulai.',
+    paymentMethods: 'Metode pembayaran yang diterima:',
+    cash: 'Tunai',
+    article3Title: 'Pasal 3 — Kewajiban Klien',
+    article3Body: 'Pihak II setuju untuk:',
+    resp1: 'Memberikan dokumen yang akurat dan lengkap sesuai permintaan',
+    resp2: 'Menanggapi permintaan informasi secara tepat waktu',
+    resp3: 'Memastikan paspor berlaku minimal 6 bulan',
+    article4Title: 'Pasal 4 — Tanpa Jaminan',
+    article4Body: 'Pihak I hanya memberikan layanan bantuan visa profesional. Persetujuan atau penolakan akhir atas setiap permohonan visa merupakan kewenangan Direktorat Jenderal Imigrasi Republik Indonesia. Pihak I tidak menjamin persetujuan permohonan apapun.',
+    article5Title: 'Pasal 5 — Kebijakan Pengembalian Dana',
+    article5Body: 'Pengembalian dana ditangani berdasarkan kasus per kasus atas kebijakan Pihak I. Biaya pemerintah yang dibayarkan kepada otoritas imigrasi tidak dapat dikembalikan dalam keadaan apapun.',
+    article6Title: 'Pasal 6 — Hukum yang Berlaku',
+    article6Body: 'Perjanjian ini diatur oleh hukum Republik Indonesia. Setiap perselisihan akan diselesaikan di pengadilan Bali, Indonesia.',
+    sigPartyI: 'Pihak I',
+    sigPartyII: 'Pihak II',
+    signature: 'Tanda Tangan',
+  },
+}
+
 export interface AgreementData {
   agreementNumber: string
   date: string
@@ -143,6 +206,7 @@ export interface AgreementData {
   serviceName: string
   serviceDescription: string
   quotedPrice: string
+  language: AgreementLanguage
 }
 
 export interface AgreementCompanyInfo {
@@ -169,79 +233,75 @@ interface ServiceAgreementProps {
 }
 
 export function ServiceAgreementDocument({ data, company }: ServiceAgreementProps) {
+  const l = t[data.language]
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.content}>
           {/* Title */}
-          <Text style={styles.title}>Service Agreement</Text>
-          <Text style={styles.subtitle}>Perjanjian Layanan</Text>
+          <Text style={styles.title}>{l.title}</Text>
 
           {/* Meta */}
           <View style={styles.metaRow}>
             <Text style={styles.metaText}>No: {data.agreementNumber}</Text>
-            <Text style={styles.metaText}>Date / Tanggal: {data.date}</Text>
+            <Text style={styles.metaText}>{l.date}: {data.date}</Text>
           </View>
 
           {/* Preamble */}
-          <Text style={styles.paragraph}>
-            This Service Agreement (&quot;Agreement&quot;) is entered into by and between:
-          </Text>
-          <Text style={styles.paragraphItalic}>
-            Perjanjian Layanan ini ditandatangani oleh dan antara:
-          </Text>
+          <Text style={styles.paragraph}>{l.preamble}</Text>
 
           {/* Party I */}
-          <Text style={[styles.sectionTitle, { marginTop: 6 }]}>Party I / Pihak I — Service Provider</Text>
+          <Text style={[styles.sectionTitle, { marginTop: 6 }]}>{l.partyI}</Text>
           <View style={styles.infoTable}>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Company Name</Text>
+              <Text style={styles.infoLabel}>{l.companyName}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{company.legalName}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>NIB</Text>
+              <Text style={styles.infoLabel}>{l.nib}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{company.nib}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Address / Alamat</Text>
+              <Text style={styles.infoLabel}>{l.address}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{company.address}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Represented by</Text>
+              <Text style={styles.infoLabel}>{l.representedBy}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{company.director.name}, {company.director.title}</Text>
             </View>
           </View>
 
           {/* Party II */}
-          <Text style={styles.sectionTitle}>Party II / Pihak II — Client</Text>
+          <Text style={styles.sectionTitle}>{l.partyII}</Text>
           <View style={styles.infoTable}>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Full Name / Nama</Text>
+              <Text style={styles.infoLabel}>{l.fullName}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.customerName}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Nationality</Text>
+              <Text style={styles.infoLabel}>{l.nationality}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.nationality}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Passport Number</Text>
+              <Text style={styles.infoLabel}>{l.passport}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.passportNumber}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>WhatsApp</Text>
+              <Text style={styles.infoLabel}>{l.whatsapp}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.whatsappNumber}</Text>
             </View>
             {data.email && (
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Email</Text>
+                <Text style={styles.infoLabel}>{l.email}</Text>
                 <Text style={styles.infoSeparator}>:</Text>
                 <Text style={styles.infoValue}>{data.email}</Text>
               </View>
@@ -249,37 +309,30 @@ export function ServiceAgreementDocument({ data, company }: ServiceAgreementProp
           </View>
 
           {/* Article 1 */}
-          <Text style={styles.sectionTitle}>Article 1 — Scope of Service / Ruang Lingkup Layanan</Text>
-          <Text style={styles.paragraph}>
-            Party I agrees to provide the following service to Party II:
-          </Text>
-          <Text style={styles.paragraphItalic}>
-            Pihak I setuju untuk memberikan layanan berikut kepada Pihak II:
-          </Text>
+          <Text style={styles.sectionTitle}>{l.article1Title}</Text>
+          <Text style={styles.paragraph}>{l.article1Body}</Text>
           <View style={styles.infoTable}>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Service / Layanan</Text>
+              <Text style={styles.infoLabel}>{l.service}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.serviceName}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Description</Text>
+              <Text style={styles.infoLabel}>{l.description}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.serviceDescription}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Quoted Price / Harga</Text>
+              <Text style={styles.infoLabel}>{l.quotedPrice}</Text>
               <Text style={styles.infoSeparator}>:</Text>
               <Text style={styles.infoValue}>{data.quotedPrice}</Text>
             </View>
           </View>
 
           {/* Article 2 */}
-          <Text style={styles.sectionTitle}>Article 2 — Payment Terms / Ketentuan Pembayaran</Text>
-          <Text style={styles.paragraph}>
-            Full payment is required before processing begins. / Pembayaran penuh diperlukan sebelum proses dimulai.
-          </Text>
-          <Text style={[styles.paragraph, { marginTop: 2 }]}>Accepted payment methods / Metode pembayaran:</Text>
+          <Text style={styles.sectionTitle}>{l.article2Title}</Text>
+          <Text style={styles.paragraph}>{l.article2Body}</Text>
+          <Text style={[styles.paragraph, { marginTop: 2 }]}>{l.paymentMethods}</Text>
           <View style={styles.bulletItem}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
             <Text style={styles.bulletText}>
@@ -292,69 +345,42 @@ export function ServiceAgreementDocument({ data, company }: ServiceAgreementProp
           </View>
           <View style={styles.bulletItem}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletText}>Cash / Tunai</Text>
+            <Text style={styles.bulletText}>{l.cash}</Text>
           </View>
 
           {/* Article 3 */}
-          <Text style={styles.sectionTitle}>Article 3 — Client Responsibilities / Kewajiban Klien</Text>
-          <Text style={styles.paragraph}>Party II agrees to: / Pihak II setuju untuk:</Text>
+          <Text style={styles.sectionTitle}>{l.article3Title}</Text>
+          <Text style={styles.paragraph}>{l.article3Body}</Text>
           <View style={styles.bulletItem}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletText}>Provide accurate and complete documents as requested</Text>
+            <Text style={styles.bulletText}>{l.resp1}</Text>
           </View>
           <View style={styles.bulletItem}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletTextItalic}>Memberikan dokumen yang akurat dan lengkap sesuai permintaan</Text>
+            <Text style={styles.bulletText}>{l.resp2}</Text>
           </View>
           <View style={styles.bulletItem}>
             <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletText}>Respond to requests for information in a timely manner</Text>
-          </View>
-          <View style={styles.bulletItem}>
-            <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletTextItalic}>Menanggapi permintaan informasi secara tepat waktu</Text>
-          </View>
-          <View style={styles.bulletItem}>
-            <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletText}>Ensure passport is valid for a minimum of 6 months</Text>
-          </View>
-          <View style={styles.bulletItem}>
-            <Text style={styles.bullet}>{'\u2022'}</Text>
-            <Text style={styles.bulletTextItalic}>Memastikan paspor berlaku minimal 6 bulan</Text>
+            <Text style={styles.bulletText}>{l.resp3}</Text>
           </View>
 
           {/* Article 4 */}
-          <Text style={styles.sectionTitle}>Article 4 — No Guarantee / Tanpa Jaminan</Text>
-          <Text style={styles.paragraph}>
-            Party I provides professional visa assistance services only. Final approval or rejection of any visa application is at the sole discretion of the Directorate General of Immigration of the Republic of Indonesia. Party I does not guarantee approval of any application.
-          </Text>
-          <Text style={styles.paragraphItalic}>
-            Pihak I hanya memberikan layanan bantuan visa profesional. Persetujuan atau penolakan akhir atas setiap permohonan visa merupakan kewenangan Direktorat Jenderal Imigrasi Republik Indonesia. Pihak I tidak menjamin persetujuan permohonan apapun.
-          </Text>
+          <Text style={styles.sectionTitle}>{l.article4Title}</Text>
+          <Text style={styles.paragraph}>{l.article4Body}</Text>
 
           {/* Article 5 */}
-          <Text style={styles.sectionTitle}>Article 5 — Refund Policy / Kebijakan Pengembalian Dana</Text>
-          <Text style={styles.paragraph}>
-            Refunds are handled on a case-by-case basis at the sole discretion of Party I. Government fees paid to immigration authorities are non-refundable under any circumstances.
-          </Text>
-          <Text style={styles.paragraphItalic}>
-            Pengembalian dana ditangani berdasarkan kasus per kasus atas kebijakan Pihak I. Biaya pemerintah yang dibayarkan kepada otoritas imigrasi tidak dapat dikembalikan dalam keadaan apapun.
-          </Text>
+          <Text style={styles.sectionTitle}>{l.article5Title}</Text>
+          <Text style={styles.paragraph}>{l.article5Body}</Text>
 
           {/* Article 6 */}
-          <Text style={styles.sectionTitle}>Article 6 — Governing Law / Hukum yang Berlaku</Text>
-          <Text style={styles.paragraph}>
-            This Agreement is governed by the laws of the Republic of Indonesia. Any disputes shall be resolved in the courts of Bali, Indonesia.
-          </Text>
-          <Text style={styles.paragraphItalic}>
-            Perjanjian ini diatur oleh hukum Republik Indonesia. Setiap perselisihan akan diselesaikan di pengadilan Bali, Indonesia.
-          </Text>
+          <Text style={styles.sectionTitle}>{l.article6Title}</Text>
+          <Text style={styles.paragraph}>{l.article6Body}</Text>
 
           {/* Signature Block */}
           <View style={styles.signatureRow}>
             {/* Party I */}
             <View style={styles.signatureBlock}>
-              <Text style={styles.signatureLabel}>Party I / Pihak I</Text>
+              <Text style={styles.signatureLabel}>{l.sigPartyI}</Text>
               <Text style={styles.signatureText}>{company.legalName}</Text>
               <Image
                 style={styles.signatureImage}
@@ -366,10 +392,10 @@ export function ServiceAgreementDocument({ data, company }: ServiceAgreementProp
 
             {/* Party II */}
             <View style={styles.signatureBlock}>
-              <Text style={styles.signatureLabel}>Party II / Pihak II</Text>
+              <Text style={styles.signatureLabel}>{l.sigPartyII}</Text>
               <Text style={styles.signatureText}>{data.customerName}</Text>
               <View style={styles.signatureLine} />
-              <Text style={styles.signatureText}>Signature / Tanda Tangan</Text>
+              <Text style={styles.signatureText}>{l.signature}</Text>
             </View>
           </View>
         </View>

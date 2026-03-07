@@ -28,6 +28,7 @@ export function AgreementForm({
 }: AgreementFormProps) {
   const [generating, setGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [language, setLanguage] = useState<'en' | 'id'>('en')
 
   const handleGenerate = async () => {
     setError(null)
@@ -46,6 +47,7 @@ export function AgreementForm({
           serviceName,
           serviceDescription,
           quotedPrice: formatPrice(quotedPrice),
+          language,
         }),
       })
 
@@ -113,6 +115,35 @@ export function AgreementForm({
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         </div>
       )}
+
+      {/* Language Toggle */}
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-zinc-500 dark:text-zinc-400">Language:</span>
+        <div className="inline-flex rounded-md ring-1 ring-zinc-200 dark:ring-zinc-700">
+          <button
+            type="button"
+            onClick={() => setLanguage('en')}
+            className={`px-3 py-1 text-xs font-medium rounded-l-md transition-colors ${
+              language === 'en'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+            }`}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            onClick={() => setLanguage('id')}
+            className={`px-3 py-1 text-xs font-medium rounded-r-md transition-colors ${
+              language === 'id'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+            }`}
+          >
+            Indonesian
+          </button>
+        </div>
+      </div>
 
       <div className="flex flex-wrap gap-3">
         <button
