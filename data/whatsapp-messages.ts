@@ -6,129 +6,75 @@ export interface WhatsAppTemplate {
 export const whatsappTemplates: WhatsAppTemplate[] = [
   {
     serviceId: 'c1-visa',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *C1 Tourist Visa* (60-day single entry visa).
-
-My details:
-- Nationality: [Your nationality]
-- Intended arrival date: [Date]
-- Purpose: [Tourism/Family visit/Attending event]
-- Planned duration: [60 days / Need extensions to 180 days]
-
-Please let me know the next steps and exact pricing for my nationality. Thank you!`,
+    message: `Hi, I'm interested in the C1 Tourist Visa. Can you help?`,
   },
   {
     serviceId: 'retirement-kitas',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *Retirement KITAS* (1-year permit).
-
-My details:
-- Age: [Your age - must be 55+]
-- Nationality: [Your nationality]
-- Monthly pension/retirement income: [USD amount]
-- Current location: [Country]
-- Planned move date: [Date]
-
-Note: Minimum USD 3,000/month pension required.
-
-I'd like to know more about the process and requirements. Thank you!`,
+    message: `Hi, I'm interested in the Retirement KITAS. Can you tell me more?`,
   },
   {
     serviceId: 'digital-nomad-kitas',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *E33 Second Home Visa* (5-year Digital Nomad permit).
-
-My details:
-- Nationality: [Your nationality]
-- Current location: [Country]
-- Work: [Remote/Freelance/Business owner/Investor]
-- Financial commitment option: [USD 130k bank savings / USD 1M property purchase]
-- Planned move date: [Date]
-
-Please let me know the requirements and next steps. Thank you!`,
+    message: `Hi, I'm interested in the Digital Nomad KITAS (E33G). Can you help?`,
   },
   {
     serviceId: 'investor-kitas',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *Investor/Working KITAS*.
-
-My details:
-- Nationality: [Your nationality]
-- Status: [Have PT PMA / Need PT PMA setup / Employed by Indonesian company]
-- Current location: [Country]
-- Planned start date: [Date]
-
-Please advise on the process and requirements. Thank you!`,
+    message: `Hi, I'm interested in the Working KITAS. Can you tell me more?`,
+  },
+  {
+    serviceId: 'investor-itas-e28a',
+    message: `Hi, I'm interested in the Investor ITAS. Can you tell me more?`,
   },
   {
     serviceId: 'b1-visa',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in *B1 Visa assistance* and/or extension.
-
-My details:
-- Nationality: [Your nationality]
-- Arrival date: [Date]
-- Need: [Pre-arrangement / Extension / Both]
-
-Please let me know how you can help. Thank you!`,
+    message: `Hi, I need help with a B1 Visa on Arrival. Can you assist?`,
+  },
+  {
+    serviceId: 'b1-extension',
+    message: `Hi, I need to extend my B1 visa. Can you help?`,
+  },
+  {
+    serviceId: 'c1-extension',
+    message: `Hi, I need to extend my C1 visa. Can you help?`,
+  },
+  {
+    serviceId: 'c2-business-visa',
+    message: `Hi, I'm interested in the C2 Business Visa. Can you help?`,
+  },
+  {
+    serviceId: 'c6-social-visa',
+    message: `Hi, I'm interested in the C6 Social/Volunteer Visa. Can you help?`,
+  },
+  {
+    serviceId: 'd1-multi-entry-tourist',
+    message: `Hi, I'm interested in the D1 Multi-Entry Tourist Visa. Can you tell me more?`,
+  },
+  {
+    serviceId: 'd2-multi-entry-business',
+    message: `Hi, I'm interested in the D2 Multi-Entry Business Visa. Can you tell me more?`,
   },
   {
     serviceId: 'd12-visa-1year',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *D12 Pre-Investment Visit Visa (1 Year)*.
-
-My details:
-- Nationality: [Your nationality]
-- Purpose: [Business survey/Investment exploration/Field research]
-- Intended arrival date: [Date]
-
-Please help me with the application process and requirements. Thank you!`,
+    message: `Hi, I'm interested in the D12 Pre-Investment Visa (1 Year). Can you help?`,
   },
   {
     serviceId: 'd12-visa-2year',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in the *D12 Pre-Investment Visit Visa (2 Years)*.
-
-My details:
-- Nationality: [Your nationality]
-- Purpose: [Business survey/Investment exploration/Field research]
-- Intended arrival date: [Date]
-
-Please help me with the application process and requirements. Thank you!`,
+    message: `Hi, I'm interested in the D12 Pre-Investment Visa (2 Years). Can you help?`,
+  },
+  {
+    serviceId: 'd12-extension',
+    message: `Hi, I need to extend my D12 visa. Can you help?`,
   },
   {
     serviceId: 'pt-pma',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in *PT PMA company setup*.
-
-My details:
-- Nationality: [Your nationality]
-- Business type: [Your planned business]
-- Number of shareholders: [Number]
-- Timeline: [When do you want to start?]
-
-Please provide more information about the setup process and costs. Thank you!`,
+    message: `Hi, I'm interested in PT PMA company setup. Can you tell me more?`,
+  },
+  {
+    serviceId: 'bali-tourist-levy',
+    message: `Hi, I need help with the Bali Tourist Levy. Can you assist?`,
   },
   {
     serviceId: 'general',
-    message: `Hi BaliVisaAssist! 👋
-
-I'm interested in learning more about your visa services for Indonesia.
-
-My details:
-- Nationality: [Your nationality]
-- Purpose: [Tourism/Business/Retirement/Work/Investment]
-- Timeline: [When do you plan to come to Indonesia?]
-
-Please let me know which visa option would be best for me. Thank you!`,
+    message: `Hi, I need help with a visa for Indonesia. Can you assist?`,
   },
 ];
 
