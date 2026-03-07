@@ -34,7 +34,7 @@ export const COMPANY = {
   operatorDisclosure: 'BaliVisaAssist is operated by CIPTA SOLUSI GLOBAL, Indonesia.',
 
   // Business Hours (optional)
-  businessHours: 'Monday - Friday: 9:00 AM - 5:00 PM WITA',
+  businessHours: 'Daily: 7:00 AM - 11:00 PM WITA',
 } as const;
 
 export const SEO = {
