@@ -14,6 +14,13 @@ export const COMPANY = {
     twitter: '',
   },
 
+  // Banking Information
+  banking: {
+    bankName: 'BCA',
+    accountNumber: '7703179811',
+    accountHolder: 'PT CIPTA SOLUSI GLOBAL',
+  },
+
   // Office Information
   office: {
     address: 'JL. PANTAI BATU BOLONG NO.38, CANGGU, Kec. Kuta Utara, Kabupaten Badung, Bali 80363',

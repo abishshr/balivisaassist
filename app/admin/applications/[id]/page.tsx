@@ -5,7 +5,9 @@ import { createClient } from '@/lib/supabase/server'
 import { StatusBadge } from '@/components/admin/StatusBadge'
 import { DocumentUpload } from '@/components/admin/DocumentUpload'
 import { SponsorLetterForm } from '@/components/admin/SponsorLetterForm'
+import { AgreementForm } from '@/components/admin/AgreementForm'
 import { ImmigrationApply } from '@/components/admin/ImmigrationApply'
+import { getServiceBySlug } from '@/data/services'
 import { formatPrice, formatDate } from '@/lib/utils'
 import type { Application, ApplicationPriority, Document } from '@/types/application'
 import type { Customer } from '@/types/customer'
@@ -196,6 +198,23 @@ export default async function ApplicationDetailPage(props: {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Service Agreement Section */}
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-5 lg:p-6">
+        <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
+          Service Agreement
+        </h2>
+        <AgreementForm
+          customerName={`${customer.first_name} ${customer.last_name}`}
+          nationality={customer.nationality}
+          passportNumber={customer.passport_number || ''}
+          whatsappNumber={customer.whatsapp_number}
+          email={customer.email || ''}
+          serviceName={application.service_name}
+          serviceDescription={getServiceBySlug(application.service_id)?.shortDescription || application.service_name}
+          quotedPrice={application.quoted_price}
+        />
       </div>
 
       {/* Documents Section */}
