@@ -11,7 +11,7 @@ import path from 'path'
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 36,
+    paddingTop: 24,
     paddingBottom: 36,
     paddingHorizontal: 48,
     fontFamily: 'Helvetica',
@@ -22,11 +22,47 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingBottom: 8,
+    borderBottomWidth: 2,
+    borderBottomColor: '#0F4C5C',
+  },
+  headerLogo: {
+    width: 44,
+    height: 44,
+    marginRight: 12,
+  },
+  headerInfo: {
+    flex: 1,
+  },
+  headerBrand: {
+    fontSize: 16,
+    fontFamily: 'Helvetica-Bold',
+    color: '#0F4C5C',
+    letterSpacing: 0.5,
+  },
+  headerBrandAccent: {
+    color: '#E07A5F',
+  },
+  headerLegal: {
+    fontSize: 7.5,
+    color: '#555',
+    marginTop: 1,
+  },
+  headerContact: {
+    fontSize: 7,
+    color: '#777',
+    marginTop: 2,
+  },
   title: {
     fontSize: 13,
     fontFamily: 'Helvetica-Bold',
     textAlign: 'center',
     marginBottom: 12,
+    marginTop: 6,
     textTransform: 'uppercase',
   },
   metaRow: {
@@ -239,6 +275,21 @@ export function ServiceAgreementDocument({ data, company }: ServiceAgreementProp
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.content}>
+          {/* Company Header */}
+          <View style={styles.header}>
+            <Image
+              style={styles.headerLogo}
+              src={path.join(process.cwd(), 'public/images/logo-1024.png')}
+            />
+            <View style={styles.headerInfo}>
+              <Text style={styles.headerBrand}>BaliVisa<Text style={styles.headerBrandAccent}>Assist</Text></Text>
+              <Text style={styles.headerLegal}>PT {company.legalName} | NIB: {company.nib}</Text>
+              <Text style={styles.headerContact}>
+                {company.address} | info@balivisaassist.com
+              </Text>
+            </View>
+          </View>
+
           {/* Title */}
           <Text style={styles.title}>{l.title}</Text>
 
