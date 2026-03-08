@@ -11,7 +11,7 @@ import path from 'path'
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 24,
+    paddingTop: 40,
     paddingBottom: 36,
     paddingHorizontal: 48,
     fontFamily: 'Helvetica',
@@ -25,44 +25,44 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
-    paddingBottom: 8,
+    marginBottom: 16,
+    paddingBottom: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#0F4C5C',
   },
   headerLogo: {
-    width: 44,
-    height: 44,
-    marginRight: 12,
+    width: 48,
+    height: 48,
+    marginRight: 14,
   },
   headerInfo: {
     flex: 1,
   },
   headerBrand: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Helvetica-Bold',
     color: '#0F4C5C',
     letterSpacing: 0.5,
+    marginBottom: 4,
   },
   headerBrandAccent: {
     color: '#E07A5F',
   },
   headerLegal: {
-    fontSize: 7.5,
+    fontSize: 8,
     color: '#555',
-    marginTop: 1,
+    marginBottom: 3,
   },
   headerContact: {
-    fontSize: 7,
+    fontSize: 7.5,
     color: '#777',
-    marginTop: 2,
   },
   title: {
     fontSize: 13,
     fontFamily: 'Helvetica-Bold',
     textAlign: 'center',
-    marginBottom: 12,
-    marginTop: 6,
+    marginBottom: 14,
+    marginTop: 2,
     textTransform: 'uppercase',
   },
   metaRow: {
