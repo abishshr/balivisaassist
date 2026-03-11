@@ -6,6 +6,7 @@ import { StatusBadge } from '@/components/admin/StatusBadge'
 import { DocumentUpload } from '@/components/admin/DocumentUpload'
 import { SponsorLetterForm } from '@/components/admin/SponsorLetterForm'
 import { AgreementForm } from '@/components/admin/AgreementForm'
+import { DocumentChecklistButton } from '@/components/admin/DocumentChecklistButton'
 import { ImmigrationApply } from '@/components/admin/ImmigrationApply'
 import { getServiceBySlug } from '@/data/services'
 import { formatPrice, formatDate } from '@/lib/utils'
@@ -215,6 +216,37 @@ export default async function ApplicationDetailPage(props: {
           serviceDescription={getServiceBySlug(application.service_id)?.shortDescription || application.service_name}
           quotedPrice={application.quoted_price}
         />
+      </div>
+
+      {/* Document Checklist Section */}
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-5 lg:p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
+            Document Checklist
+          </h2>
+          <DocumentChecklistButton
+            serviceId={application.service_id}
+            serviceName={application.service_name}
+            customerName={`${customer.first_name} ${customer.last_name}`}
+            whatsappNumber={customer.whatsapp_number}
+          />
+        </div>
+        {(() => {
+          const service = getServiceBySlug(application.service_id)
+          const requirements = service?.requirements || []
+          return requirements.length > 0 ? (
+            <ul className="space-y-2">
+              {requirements.map((req, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  <span className="text-zinc-400 dark:text-zinc-500 mt-0.5 flex-shrink-0">&#9744;</span>
+                  {req}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-zinc-500">No requirements found for this service.</p>
+          )
+        })()}
       </div>
 
       {/* Documents Section */}
