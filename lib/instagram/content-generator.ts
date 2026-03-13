@@ -233,7 +233,7 @@ Return ONLY valid JSON, no markdown.`,
   }
 }
 
-interface StoryText {
+export interface StoryText {
   line1: string
   line2: string
   cta: string
@@ -294,7 +294,7 @@ Return ONLY valid JSON, no markdown.`,
   }
 }
 
-interface ReelText {
+export interface ReelText {
   hook: string
   detail: string
   cta: string
