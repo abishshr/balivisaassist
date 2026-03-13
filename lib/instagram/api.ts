@@ -1,4 +1,4 @@
-import { GRAPH_API_BASE, IMAGE_PUBLISH_WAIT_MS } from './constants'
+import { GRAPH_API_BASE, IMAGE_PUBLISH_WAIT_MS, REEL_PUBLISH_WAIT_MS } from './constants'
 import type { InstagramConfig } from '@/types/instagram'
 
 interface CreateContainerResponse {
@@ -64,8 +64,11 @@ export async function createMediaContainer(
     caption,
   })
 
-  if (mediaType === 'IMAGE' || mediaType === 'STORIES') {
+  if (mediaType === 'IMAGE') {
     params.set('image_url', imageUrl)
+  } else if (mediaType === 'STORIES') {
+    params.set('image_url', imageUrl)
+    params.set('media_type', 'STORIES')
   } else if (mediaType === 'VIDEO' || mediaType === 'REELS') {
     params.set('video_url', imageUrl)
     params.set('media_type', mediaType)
@@ -87,15 +90,54 @@ export async function createMediaContainer(
 }
 
 /**
+ * Poll container status until it's ready (FINISHED) or fails.
+ * Used for VIDEO and REELS which take longer to process.
+ */
+async function waitForContainerReady(
+  containerId: string,
+  accessToken: string,
+  maxWaitMs: number = REEL_PUBLISH_WAIT_MS
+): Promise<void> {
+  const pollInterval = 5000 // 5 seconds
+  const maxAttempts = Math.ceil(maxWaitMs / pollInterval)
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    await sleep(pollInterval)
+
+    const res = await fetch(
+      `${GRAPH_API_BASE}/${containerId}?fields=status_code,status&access_token=${accessToken}`
+    )
+
+    if (!res.ok) continue
+
+    const data = await res.json()
+    const statusCode = data.status_code
+
+    if (statusCode === 'FINISHED') return
+    if (statusCode === 'ERROR') {
+      throw new Error(`Container processing failed: ${data.status || 'Unknown error'}`)
+    }
+    // IN_PROGRESS — keep polling
+  }
+
+  throw new Error(`Container not ready after ${maxWaitMs / 1000}s`)
+}
+
+/**
  * Step 2: Publish the media container
  */
 export async function publishMedia(
   igAccountId: string,
   accessToken: string,
-  containerId: string
+  containerId: string,
+  mediaType: 'IMAGE' | 'VIDEO' | 'STORIES' | 'REELS' = 'IMAGE'
 ): Promise<string> {
-  // Wait for Instagram to process the image
-  await sleep(IMAGE_PUBLISH_WAIT_MS)
+  // Wait for Instagram to process the media
+  if (mediaType === 'REELS' || mediaType === 'VIDEO') {
+    await waitForContainerReady(containerId, accessToken)
+  } else {
+    await sleep(IMAGE_PUBLISH_WAIT_MS)
+  }
 
   const params = new URLSearchParams({
     access_token: accessToken,
@@ -184,7 +226,8 @@ export async function publishToInstagram(
   const mediaId = await publishMedia(
     igAccountId,
     config.meta_access_token,
-    containerId
+    containerId,
+    mediaType
   )
 
   const permalink = await getMediaPermalink(mediaId, config.meta_access_token)

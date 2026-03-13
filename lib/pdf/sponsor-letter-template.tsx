@@ -11,7 +11,7 @@ import path from 'path'
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 40,
+    paddingTop: 24,
     paddingBottom: 40,
     paddingHorizontal: 50,
     fontFamily: 'Helvetica',
@@ -22,11 +22,44 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingBottom: 8,
+    borderBottomWidth: 2,
+    borderBottomColor: '#0d9488',
+  },
+  headerLogo: {
+    width: 44,
+    height: 44,
+    marginRight: 12,
+  },
+  headerInfo: {
+    flex: 1,
+  },
+  headerBrand: {
+    fontSize: 16,
+    fontFamily: 'Helvetica-Bold',
+    color: '#0d9488',
+    letterSpacing: 0.5,
+  },
+  headerLegal: {
+    fontSize: 7.5,
+    color: '#555',
+    marginTop: 1,
+  },
+  headerContact: {
+    fontSize: 7,
+    color: '#777',
+    marginTop: 2,
+  },
   title: {
     fontSize: 13,
     fontFamily: 'Helvetica-Bold',
     textAlign: 'center',
     marginBottom: 2,
+    marginTop: 6,
     textTransform: 'uppercase',
   },
   subtitle: {
@@ -161,6 +194,21 @@ export function SponsorLetterDocument({ data, company }: SponsorLetterProps) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.content}>
+        {/* Company Header */}
+        <View style={styles.header}>
+          <Image
+            style={styles.headerLogo}
+            src={path.join(process.cwd(), 'public/images/logo-1024.png')}
+          />
+          <View style={styles.headerInfo}>
+            <Text style={styles.headerBrand}>BaliVisaAssist</Text>
+            <Text style={styles.headerLegal}>PT {company.legalName} | NIB: {company.nib}</Text>
+            <Text style={styles.headerContact}>
+              {company.address} | {company.director.email}
+            </Text>
+          </View>
+        </View>
+
         {/* Title */}
         <Text style={styles.title}>Recommendation &amp; Invitation Letter</Text>
         <Text style={styles.subtitle}>For {data.visaType}</Text>

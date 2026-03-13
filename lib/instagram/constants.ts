@@ -1,10 +1,10 @@
 import type { ContentCategory } from '@/types/instagram'
 
 export const WEEKLY_ROTATION: Record<number, ContentCategory> = {
-  0: 'visa_tip',        // Sunday
+  0: 'bali_news',       // Sunday — scraped Bali news + visa mix
   1: 'visa_tip',        // Monday
   2: 'bali_lifestyle',  // Tuesday
-  3: 'visa_tip',        // Wednesday
+  3: 'bali_news',       // Wednesday — scraped Bali news + visa mix
   4: 'service_promo',   // Thursday
   5: 'bali_lifestyle',  // Friday
   6: 'faq_answer',      // Saturday
@@ -86,7 +86,27 @@ export const TOPIC_POOLS: Record<ContentCategory, string[]> = {
     'Client experience - visa extension process',
     'Why expats trust BaliVisaAssist',
   ],
+  bali_news: [
+    'Latest happenings in Bali — events, openings, local news',
+    'Bali community updates and local stories',
+    'New restaurants, surf spots, or activities in Bali',
+    'Bali weather, traffic, or infrastructure updates',
+    'Cultural events and ceremonies in Bali',
+  ],
 }
+
+export const BALI_NEWS_ACCOUNTS = ['infobali', 'infobadung', 'infodenpasar']
+
+export const STORY_WIDTH = 1080
+export const STORY_HEIGHT = 1920
+
+export const VISA_TYPES_FOR_MIXING = [
+  { name: 'D12 visa', angle: 'retirement visa for 1-2 years' },
+  { name: 'C1 visa', angle: '180-day stay for digital nomads' },
+  { name: 'B1 visa', angle: '60-day tourist visa on arrival' },
+  { name: 'B211A visa', angle: 'social/business visa up to 180 days' },
+  { name: 'KITAS', angle: 'temporary stay permit for working in Bali' },
+]
 
 export const INSTAGRAM_API_BASE = 'https://graph.instagram.com/v21.0'
 export const GRAPH_API_BASE = 'https://graph.facebook.com/v21.0'
@@ -94,4 +114,13 @@ export const GRAPH_API_BASE = 'https://graph.facebook.com/v21.0'
 export const MAX_CAPTION_LENGTH = 300
 export const MAX_HASHTAGS = 30
 export const IMAGE_PUBLISH_WAIT_MS = 30000 // 30 seconds for IG to process
+
+// Reel video settings
+export const REEL_WIDTH = 1080
+export const REEL_HEIGHT = 1920
+export const REEL_FPS = 30
+export const REEL_DURATION_SECONDS = 8
+export const REEL_PUBLISH_WAIT_MS = 90000 // 90 seconds for IG to process video
+export const REEL_SAFE_ZONE_TOP = 250 // px from top (IG UI overlay)
+export const REEL_SAFE_ZONE_BOTTOM = 250 // px from bottom (IG UI overlay)
 

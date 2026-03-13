@@ -15,8 +15,9 @@ export type ContentCategory =
   | 'faq_answer'
   | 'immigration_news'
   | 'testimonial'
+  | 'bali_news'
 
-export type PostSource = 'ai_generated' | 'news_scraper' | 'manual' | 'template'
+export type PostSource = 'ai_generated' | 'news_scraper' | 'manual' | 'template' | 'instagram_scraper'
 
 export type MediaType = 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM' | 'STORIES' | 'REELS'
 
@@ -224,4 +225,20 @@ export interface GenerateContentResponse {
 
 export interface PostWithAnalytics extends InstagramPost {
   analytics?: InstagramAnalytics | null
+}
+
+// Scraped Instagram News
+export interface ScrapedInstagramNews {
+  id: string
+  source_account: string
+  source_post_id: string
+  caption_text: string | null
+  image_url: string | null
+  image_stored_url: string | null
+  image_storage_path: string | null
+  post_timestamp: string | null
+  is_used: boolean
+  used_by_post_id: string | null
+  scraped_at: string
+  created_at: string
 }

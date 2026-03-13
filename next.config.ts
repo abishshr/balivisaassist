@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
   },
 
   // Exclude tesseract.js from bundling (needs native worker scripts)
-  serverExternalPackages: ['tesseract.js'],
+  serverExternalPackages: ['tesseract.js', '@ffmpeg/ffmpeg', '@ffmpeg/util'],
 
   // Performance optimizations
   poweredByHeader: false,

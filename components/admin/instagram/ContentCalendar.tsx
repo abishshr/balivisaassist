@@ -16,6 +16,7 @@ const categoryColors: Record<ContentCategory, string> = {
   faq_answer: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   immigration_news: 'bg-red-500/20 text-red-400 border-red-500/30',
   testimonial: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+  bali_news: 'bg-teal-500/20 text-teal-400 border-teal-500/30',
 }
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
