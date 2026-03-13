@@ -213,7 +213,8 @@ export async function downloadAndStoreImage(
 export async function fetchAndStoreImage(
   searchQuery: string,
   postId: string,
-  excludeIds?: string[]
+  excludeIds?: string[],
+  orientation: 'squarish' | 'portrait' = 'squarish'
 ): Promise<{ storagePath: string; publicUrl: string; unsplashAttribution: string; unsplashPhotoId: string }> {
   // If no exclude list provided, fetch from DB
   const usedIds = excludeIds ?? await getUsedUnsplashIds()
@@ -221,10 +222,10 @@ export async function fetchAndStoreImage(
   let photo: UnsplashPhoto
 
   try {
-    photo = await searchUnsplashPhoto(searchQuery, 'squarish', usedIds)
+    photo = await searchUnsplashPhoto(searchQuery, orientation, usedIds)
   } catch {
     // Fallback to broader query if specific one returns nothing
-    photo = await searchUnsplashPhoto('Bali', 'squarish', usedIds)
+    photo = await searchUnsplashPhoto('Bali', orientation, usedIds)
   }
 
   const { storagePath, publicUrl } = await downloadAndStoreImage(photo.imageUrl, postId)

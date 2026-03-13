@@ -443,7 +443,7 @@ export async function generateStoryPost(): Promise<InstagramPost | null> {
       if (recentSet.has(searchQuery.toLowerCase())) {
         searchQuery = `Bali ${fallbackTopic.split(' ').pop() || 'tropical'}`
       }
-      const { publicUrl: unsplashUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `story-src-${post.id}`, usedIds)
+      const { publicUrl: unsplashUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `story-src-${post.id}`, usedIds, 'portrait')
       sourceImageUrl = unsplashUrl
       unsplashId = unsplashPhotoId
     }
@@ -558,7 +558,7 @@ export async function generateReelPost(): Promise<InstagramPost | null> {
       if (recentSet.has(searchQuery.toLowerCase())) {
         searchQuery = `Bali ${fallbackTopic.split(' ').pop() || 'tropical'}`
       }
-      const { publicUrl: unsplashUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `reel-src-${post.id}`, usedIds)
+      const { publicUrl: unsplashUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `reel-src-${post.id}`, usedIds, 'portrait')
       sourceImageUrl = unsplashUrl
       unsplashId = unsplashPhotoId
     }

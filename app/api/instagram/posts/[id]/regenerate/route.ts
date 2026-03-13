@@ -49,15 +49,9 @@ export async function POST(
 
       updates.caption = `${storyText.line1} — ${storyText.line2}`
 
-      // Get a source image (reuse existing or fetch new)
-      const sourceImageUrl = post.image_url || ''
-      let imageUrl = sourceImageUrl
-
-      if (body.regenerate_image || !sourceImageUrl) {
-        const searchQuery = topic.split(' ').slice(0, 3).join(' ') || 'Bali lifestyle'
-        const { publicUrl } = await fetchAndStoreImage(searchQuery, `story-src-${post.id}`)
-        imageUrl = publicUrl
-      }
+      // Always fetch a new source image for stories — the image IS the content
+      const searchQuery = `Bali ${topic.split(' ').slice(0, 3).join(' ')}`.trim() || 'Bali lifestyle'
+      const { publicUrl: imageUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `story-src-${post.id}`, undefined, 'portrait')
 
       // Generate the story overlay image
       const { storagePath, publicUrl } = await generateStoryImage(
@@ -68,7 +62,7 @@ export async function POST(
 
       updates.image_url = publicUrl
       updates.image_storage_path = storagePath
-      updates.metadata = { ...metadata, story_text: storyText }
+      updates.metadata = { ...metadata, story_text: storyText, unsplash_photo_id: unsplashPhotoId }
     } else if (post.media_type === 'REELS') {
       // Regenerate reel: new text + new video
       const topic = post.news_title || category.replace('_', ' ')
@@ -77,23 +71,20 @@ export async function POST(
       updates.caption = reelText.caption
       updates.hashtags = reelText.hashtags
 
-      // Get a source image (reuse existing or fetch new)
-      let imageUrl = ''
       // For reels, we always need a source image to rebuild the video
-      const searchQuery = topic.split(' ').slice(0, 3).join(' ') || 'Bali lifestyle'
-      const { publicUrl: srcUrl } = await fetchAndStoreImage(searchQuery, `reel-src-${post.id}`)
-      imageUrl = srcUrl
+      const searchQuery = `Bali ${topic.split(' ').slice(0, 3).join(' ')}`.trim() || 'Bali lifestyle'
+      const { publicUrl: srcUrl, unsplashPhotoId } = await fetchAndStoreImage(searchQuery, `reel-src-${post.id}`, undefined, 'portrait')
 
       // Generate the reel video
       const { storagePath, publicUrl, musicTrack } = await generateReelVideo(
-        imageUrl,
+        srcUrl,
         { hook: reelText.hook, detail: reelText.detail, cta: reelText.cta },
         post.id
       )
 
       updates.image_url = publicUrl
       updates.image_storage_path = storagePath
-      updates.metadata = { ...metadata, reel_text: reelText, music_track: musicTrack }
+      updates.metadata = { ...metadata, reel_text: reelText, music_track: musicTrack, unsplash_photo_id: unsplashPhotoId }
     } else {
       // IMAGE posts: existing behavior (caption + optional image)
       const { caption, hashtags } = await regenerateCaption(
@@ -106,12 +97,13 @@ export async function POST(
       updates.hashtags = hashtags
 
       if (body.regenerate_image && post.image_prompt) {
-        const { storagePath, publicUrl } = await fetchAndStoreImage(
+        const { storagePath, publicUrl, unsplashPhotoId } = await fetchAndStoreImage(
           post.image_prompt,
           post.id
         )
         updates.image_url = publicUrl
         updates.image_storage_path = storagePath
+        updates.metadata = { ...metadata, unsplash_photo_id: unsplashPhotoId }
       }
     }
 
