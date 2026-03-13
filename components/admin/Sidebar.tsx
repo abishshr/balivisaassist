@@ -148,10 +148,10 @@ export function Sidebar({ userEmail }: SidebarProps) {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  'flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition-colors relative',
+                  'flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition-all duration-150 relative',
                   isActive
                     ? 'text-emerald-400'
-                    : 'text-zinc-500 active:text-zinc-300'
+                    : 'text-zinc-500 active:text-zinc-300 active:scale-90'
                 )}
               >
                 <item.icon className="w-5 h-5" />

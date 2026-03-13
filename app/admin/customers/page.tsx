@@ -19,7 +19,7 @@ export default async function CustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             Customers
@@ -28,12 +28,21 @@ export default async function CustomersPage() {
             {customers.length}
           </span>
         </div>
+        {/* Desktop button */}
         <Link
           href="/admin/customers/new"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           <Plus className="w-4 h-4" />
           New Customer
+        </Link>
+        {/* Mobile button */}
+        <Link
+          href="/admin/customers/new"
+          className="sm:hidden inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+        >
+          <Plus className="w-4 h-4" />
+          Add
         </Link>
       </div>
 

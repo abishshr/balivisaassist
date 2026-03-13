@@ -19,11 +19,11 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen bg-zinc-50/50 dark:bg-zinc-950">
+    <div className="flex h-dvh bg-zinc-50/50 dark:bg-zinc-950 supports-[height:100dvh]:h-dvh h-screen">
       <Sidebar userEmail={user.email} />
-      <main className="flex-1 overflow-y-auto">
-        <div className="p-6 pb-24 md:pb-8 lg:p-8">
-          <div className="max-w-7xl mx-auto">
+      <main className="flex-1 overflow-y-auto overscroll-contain">
+        <div className="p-4 pb-24 md:p-6 md:pb-8 lg:p-8">
+          <div className="max-w-7xl mx-auto admin-fade-in">
             {children}
           </div>
         </div>
