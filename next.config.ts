@@ -31,8 +31,13 @@ const nextConfig: NextConfig = {
     } : false,
   },
 
-  // Exclude tesseract.js from bundling (needs native worker scripts)
-  serverExternalPackages: ['tesseract.js', '@ffmpeg/ffmpeg', '@ffmpeg/util'],
+  // Exclude native packages from bundling
+  serverExternalPackages: ['tesseract.js', 'ffmpeg-static'],
+
+  // Include ffmpeg binary in serverless function output
+  outputFileTracingIncludes: {
+    '/app/api/cron/morning': ['./node_modules/ffmpeg-static/ffmpeg'],
+  },
 
   // Performance optimizations
   poweredByHeader: false,

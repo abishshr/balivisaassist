@@ -10,7 +10,7 @@ export const maxDuration = 120 // Video processing needs more time
  * 1. Refresh Meta access token if needed
  * 2. Publish approved posts + stories + reels
  * 3. Generate tomorrow's content
- * 4. Generate a story from scraped news
+ * 4. Generate 2 stories from scraped news
  * 5. Generate a reel from scraped news
  */
 export async function GET(request: Request) {
@@ -41,14 +41,17 @@ export async function GET(request: Request) {
       results.generated = { error: error instanceof Error ? error.message : 'Failed' }
     }
 
-    // 4. Generate a story from scraped Bali news
-    try {
-      const story = await generateStoryPost()
-      results.story = story
-        ? { id: story.id, status: story.status, mediaType: story.media_type }
-        : { skipped: 'No scraped news available for story' }
-    } catch (error) {
-      results.story = { error: error instanceof Error ? error.message : 'Failed' }
+    // 4. Generate two stories from scraped Bali news
+    for (let i = 0; i < 2; i++) {
+      const key = i === 0 ? 'story1' : 'story2'
+      try {
+        const story = await generateStoryPost()
+        results[key] = story
+          ? { id: story.id, status: story.status, mediaType: story.media_type }
+          : { skipped: 'No scraped news available for story' }
+      } catch (error) {
+        results[key] = { error: error instanceof Error ? error.message : 'Failed' }
+      }
     }
 
     // 5. Generate a reel from scraped Bali news

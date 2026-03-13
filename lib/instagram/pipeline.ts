@@ -564,7 +564,7 @@ export async function generateReelPost(): Promise<InstagramPost | null> {
     }
 
     // Generate reel video (Ken Burns zoom + text overlays + music)
-    const { storagePath, publicUrl } = await generateReelVideo(
+    const { storagePath, publicUrl, musicTrack } = await generateReelVideo(
       sourceImageUrl,
       { hook: reelText.hook, detail: reelText.detail, cta: reelText.cta },
       post.id
@@ -573,7 +573,7 @@ export async function generateReelPost(): Promise<InstagramPost | null> {
     const config = await getConfig()
     const finalStatus = config?.auto_approve ? 'approved' : 'pending_review'
 
-    const metadata: Record<string, unknown> = { reel_text: reelText }
+    const metadata: Record<string, unknown> = { reel_text: reelText, music_track: musicTrack }
     if (useScrapedNews) {
       metadata.scraped_news_id = newsItem!.id
       metadata.source_account = newsItem!.source_account

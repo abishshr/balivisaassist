@@ -124,3 +124,13 @@ export const REEL_PUBLISH_WAIT_MS = 90000 // 90 seconds for IG to process video
 export const REEL_SAFE_ZONE_TOP = 250 // px from top (IG UI overlay)
 export const REEL_SAFE_ZONE_BOTTOM = 250 // px from bottom (IG UI overlay)
 
+// Background music tracks for reels (stored in Supabase Storage: instagram-media bucket)
+export const REEL_MUSIC_TRACKS = [
+  'audio/tracks/track-1.mp3',
+  'audio/tracks/track-2.mp3',
+  'audio/tracks/track-3.mp3',
+  'audio/tracks/track-4.mp3',
+  'audio/tracks/track-5.mp3',
+  'audio/tracks/track-6.mp3',
+]
+
