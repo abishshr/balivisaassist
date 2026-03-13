@@ -43,6 +43,7 @@ export default function PaymentTermsPage() {
               <div className="text-sm text-gray-500 leading-relaxed space-y-2">
                 <p>We accept the following payment methods:</p>
                 <ul className="list-disc list-inside space-y-1 ml-1">
+                  <li><strong className="text-gray-700">Online Payment</strong> — Pay securely via the payment link we send you (credit/debit card, bank transfer, e-wallets, QRIS)</li>
                   <li><strong className="text-gray-700">Bank Transfer</strong> — Direct transfer to our company bank account (details below)</li>
                   <li><strong className="text-gray-700">QRIS</strong> — Scan and pay via any QRIS-compatible app (GoPay, OVO, Dana, ShopeePay, etc.)</li>
                   <li><strong className="text-gray-700">Cash</strong> — Payment in person at our Canggu office</li>

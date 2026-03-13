@@ -35,8 +35,8 @@ export type Payment = Database['public']['Tables']['payments']['Row']
 export type PaymentInsert = Database['public']['Tables']['payments']['Insert']
 export type PaymentUpdate = Database['public']['Tables']['payments']['Update']
 
-export type PaymentMethod = 'qris' | 'cash' | 'bank_transfer'
-export type PaymentStatus = 'pending' | 'received' | 'verified' | 'refunded'
+export type PaymentMethod = 'qris' | 'cash' | 'bank_transfer' | 'xendit'
+export type PaymentStatus = 'pending' | 'received' | 'verified' | 'refunded' | 'expired'
 
 export type ActivityLog = Database['public']['Tables']['activity_logs']['Row']
 export type ActivityLogInsert = Database['public']['Tables']['activity_logs']['Insert']

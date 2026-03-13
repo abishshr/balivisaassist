@@ -208,13 +208,18 @@ export interface Database {
           id: string
           application_id: string
           amount: number
-          payment_method: 'qris' | 'cash' | 'bank_transfer' | null
-          payment_status: 'pending' | 'received' | 'verified' | 'refunded'
+          payment_method: 'qris' | 'cash' | 'bank_transfer' | 'xendit' | null
+          payment_status: 'pending' | 'received' | 'verified' | 'refunded' | 'expired'
           payment_date: string | null
           reference_number: string | null
           proof_of_payment_path: string | null
           notes: string | null
           recorded_by: string | null
+          xendit_invoice_id: string | null
+          xendit_payment_url: string | null
+          xendit_payment_method: string | null
+          xendit_payment_channel: string | null
+          xendit_expires_at: string | null
           created_at: string
           updated_at: string
         }
@@ -222,13 +227,18 @@ export interface Database {
           id?: string
           application_id: string
           amount: number
-          payment_method?: 'qris' | 'cash' | 'bank_transfer' | null
-          payment_status?: 'pending' | 'received' | 'verified' | 'refunded'
+          payment_method?: 'qris' | 'cash' | 'bank_transfer' | 'xendit' | null
+          payment_status?: 'pending' | 'received' | 'verified' | 'refunded' | 'expired'
           payment_date?: string | null
           reference_number?: string | null
           proof_of_payment_path?: string | null
           notes?: string | null
           recorded_by?: string | null
+          xendit_invoice_id?: string | null
+          xendit_payment_url?: string | null
+          xendit_payment_method?: string | null
+          xendit_payment_channel?: string | null
+          xendit_expires_at?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -236,13 +246,18 @@ export interface Database {
           id?: string
           application_id?: string
           amount?: number
-          payment_method?: 'qris' | 'cash' | 'bank_transfer' | null
-          payment_status?: 'pending' | 'received' | 'verified' | 'refunded'
+          payment_method?: 'qris' | 'cash' | 'bank_transfer' | 'xendit' | null
+          payment_status?: 'pending' | 'received' | 'verified' | 'refunded' | 'expired'
           payment_date?: string | null
           reference_number?: string | null
           proof_of_payment_path?: string | null
           notes?: string | null
           recorded_by?: string | null
+          xendit_invoice_id?: string | null
+          xendit_payment_url?: string | null
+          xendit_payment_method?: string | null
+          xendit_payment_channel?: string | null
+          xendit_expires_at?: string | null
           created_at?: string
           updated_at?: string
         }

@@ -8,9 +8,10 @@ import { SponsorLetterForm } from '@/components/admin/SponsorLetterForm'
 import { AgreementForm } from '@/components/admin/AgreementForm'
 import { DocumentChecklistButton } from '@/components/admin/DocumentChecklistButton'
 import { ImmigrationApply } from '@/components/admin/ImmigrationApply'
+import { PaymentSection } from '@/components/admin/PaymentSection'
 import { getServiceBySlug } from '@/data/services'
 import { formatPrice, formatDate } from '@/lib/utils'
-import type { Application, ApplicationPriority, Document } from '@/types/application'
+import type { Application, ApplicationPriority, Document, Payment } from '@/types/application'
 import type { Customer } from '@/types/customer'
 
 interface ApplicationWithFullCustomer extends Application {
@@ -55,6 +56,15 @@ export default async function ApplicationDetailPage(props: {
     .order('created_at', { ascending: false })
 
   const documents = (documentsData || []) as unknown as Document[]
+
+  // Fetch payments
+  const { data: paymentsData } = await supabase
+    .from('payments')
+    .select('*')
+    .eq('application_id', id)
+    .order('created_at', { ascending: false })
+
+  const payments = (paymentsData || []) as unknown as Payment[]
 
   // Generate signed URLs for all documents
   const documentUrls: Record<string, string> = {}
@@ -215,6 +225,22 @@ export default async function ApplicationDetailPage(props: {
           serviceName={application.service_name}
           serviceDescription={getServiceBySlug(application.service_id)?.shortDescription || application.service_name}
           quotedPrice={application.quoted_price}
+        />
+      </div>
+
+      {/* Payment Section */}
+      <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm ring-1 ring-zinc-950/5 dark:ring-white/10 p-5 lg:p-6">
+        <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
+          Payment
+        </h2>
+        <PaymentSection
+          applicationId={id}
+          applicationNumber={application.application_number}
+          serviceName={application.service_name}
+          quotedPrice={application.quoted_price}
+          customerName={`${customer.first_name} ${customer.last_name}`}
+          customerWhatsApp={customer.whatsapp_number}
+          initialPayments={payments}
         />
       </div>
 
