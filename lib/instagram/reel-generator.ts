@@ -17,6 +17,9 @@ import {
 
 const execFile = promisify(execFileCb)
 
+// Font family for SVG text rendering (must be available to libvips/fontconfig)
+const FONT_FAMILY = "'Helvetica Neue', Helvetica, Arial, sans-serif"
+
 // ffmpeg-static exports the path to the binary
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const ffmpegPath: string = require('ffmpeg-static')
@@ -94,10 +97,12 @@ async function prepareBaseImage(imageUrl: string): Promise<Buffer> {
 }
 
 /**
- * Wrap text into lines that fit within maxWidth (estimated from font metrics)
+ * Wrap text into lines that fit within maxWidth (estimated from font metrics).
+ * Uses a conservative char-width estimate to avoid text overflowing the pill.
  */
 function wrapText(text: string, fontSize: number, maxWidth: number): string[] {
-  const avgCharWidth = fontSize * 0.55
+  // PlusJakartaSans is a slightly wide sans-serif — use 0.52 for wrap calc
+  const avgCharWidth = fontSize * 0.52
   const maxCharsPerLine = Math.floor(maxWidth / avgCharWidth)
   const words = text.split(' ')
   const lines: string[] = []
@@ -164,24 +169,9 @@ async function generateTextOverlay(
   const baseY = TEXT_Y[phase]
   const escaped = escapeXml(text)
 
-  const maxTextWidth = REEL_WIDTH - 160 // 80px padding each side
+  const maxTextWidth = REEL_WIDTH - 180 // 90px padding each side
   const lines = wrapText(escaped, cfg.fontSize, maxTextWidth)
-  const lineHeight = cfg.fontSize * 1.4
-
-  // Calculate pill dimensions
-  const textBlockHeight = lines.length * lineHeight
-  const pillHeight = textBlockHeight + cfg.paddingY * 2
-
-  // Estimate the widest line for pill width
-  const avgCharWidth = cfg.fontSize * 0.55
-  const widestLineChars = Math.max(...lines.map(l => l.length))
-  const pillWidth = Math.min(
-    widestLineChars * avgCharWidth + cfg.paddingX * 2,
-    REEL_WIDTH - 80
-  )
-
-  const pillX = (REEL_WIDTH - pillWidth) / 2
-  const pillY = baseY - cfg.paddingY - cfg.fontSize * 0.3 // account for text baseline
+  const lineHeight = cfg.fontSize * 1.45
 
   const textElements = lines
     .map((line, i) => `<text x="${REEL_WIDTH / 2}" y="${baseY + i * lineHeight}" class="overlay">${line}</text>`)
@@ -189,16 +179,21 @@ async function generateTextOverlay(
 
   const svg = `
     <svg width="${REEL_WIDTH}" height="${REEL_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-      <style>
-        .overlay {
-          fill: ${cfg.color};
-          font-size: ${cfg.fontSize}px;
-          font-weight: ${cfg.fontWeight};
-          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-          text-anchor: middle;
-        }
-      </style>
-      <rect x="${pillX}" y="${pillY}" width="${pillWidth}" height="${pillHeight}" rx="${cfg.radius}" ry="${cfg.radius}" fill="${cfg.bgColor}" />
+      <defs>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.8)" />
+        </filter>
+        <style>
+          .overlay {
+            fill: ${cfg.color};
+            font-size: ${cfg.fontSize}px;
+            font-weight: ${cfg.fontWeight};
+            font-family: ${FONT_FAMILY};
+            text-anchor: middle;
+            filter: url(#shadow);
+          }
+        </style>
+      </defs>
       ${textElements}
     </svg>
   `
@@ -230,7 +225,7 @@ async function generateBrandOverlay(): Promise<Buffer> {
           fill: rgba(255,255,255,0.85);
           font-size: 22px;
           font-weight: 600;
-          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-family: ${FONT_FAMILY};
           text-anchor: middle;
           letter-spacing: 1px;
         }
