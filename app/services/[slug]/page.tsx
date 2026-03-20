@@ -127,6 +127,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
+              <Link href={`/checkout/${service.slug}`}>
+                <Button variant="primary" className="w-full sm:w-auto text-sm">
+                  Apply Now
+                </Button>
+              </Link>
               <WhatsAppButton serviceId={service.id} fixed={false} className="text-sm" />
               <Link href="/contact">
                 <Button variant="outline" className="w-full sm:w-auto text-sm">
@@ -241,10 +246,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
               Contact us for a free consultation and personalized quote.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <WhatsAppButton serviceId={service.id} fixed={false} className="text-sm" />
-              <Link href="/contact">
-                <Button variant="outline" className="w-full sm:w-auto text-sm">Email Us</Button>
+              <Link href={`/checkout/${service.slug}`}>
+                <Button variant="primary" className="w-full sm:w-auto text-sm">
+                  Apply & Pay Online
+                </Button>
               </Link>
+              <WhatsAppButton serviceId={service.id} fixed={false} className="text-sm" />
             </div>
           </div>
         </div>
