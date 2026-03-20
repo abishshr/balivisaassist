@@ -101,7 +101,7 @@ export function Footer() {
                   className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
                 >
                   <Instagram className="w-3.5 h-3.5" />
-                  Instagram
+                  @{COMPANY.social.instagram}
                 </a>
               )}
             </div>
@@ -116,13 +116,13 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-white/10 pt-8 text-center space-y-2">
           <p className="text-xs text-gray-400">
-            {COMPANY.operatorDisclosure}
+            {COMPANY.operatorDisclosure} | NIB: {COMPANY.nib}
           </p>
           <p className="text-xs text-gray-500">
             {COMPANY.disclaimer}
           </p>
           <p className="text-xs text-gray-500">
-            &copy; {currentYear} {COMPANY.legalName}. All rights reserved.
+            &copy; {currentYear} PT {COMPANY.legalName}. All rights reserved.
           </p>
         </div>
       </div>
