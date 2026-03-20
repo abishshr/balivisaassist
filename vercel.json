@@ -1,7 +1,7 @@
 {
   "functions": {
     "app/api/cron/morning/route.ts": {
-      "memory": 3009,
+      "memory": 1024,
       "maxDuration": 120
     }
   },
