@@ -14,11 +14,9 @@ import {
   REEL_SAFE_ZONE_BOTTOM,
   REEL_MUSIC_TRACKS,
 } from './constants'
+import { FONT_FAMILY, registerFonts } from './fonts'
 
 const execFile = promisify(execFileCb)
-
-// Font family for SVG text rendering (must be available to libvips/fontconfig)
-const FONT_FAMILY = "'Helvetica Neue', Helvetica, Arial, sans-serif"
 
 // ffmpeg-static exports the path to the binary
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -188,7 +186,7 @@ async function generateTextOverlay(
             fill: ${cfg.color};
             font-size: ${cfg.fontSize}px;
             font-weight: ${cfg.fontWeight};
-            font-family: ${FONT_FAMILY};
+            font-family: '${FONT_FAMILY}';
             text-anchor: middle;
             filter: url(#shadow);
           }
@@ -225,7 +223,7 @@ async function generateBrandOverlay(): Promise<Buffer> {
           fill: rgba(255,255,255,0.85);
           font-size: 22px;
           font-weight: 600;
-          font-family: ${FONT_FAMILY};
+          font-family: '${FONT_FAMILY}';
           text-anchor: middle;
           letter-spacing: 1px;
         }
@@ -252,6 +250,7 @@ export async function generateReelVideo(
   text: ReelText,
   postId: string
 ): Promise<{ storagePath: string; publicUrl: string; musicTrack: string }> {
+  registerFonts()
   const supabase = getSupabaseAdmin()
 
   const totalFrames = REEL_FPS * REEL_DURATION_SECONDS

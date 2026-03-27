@@ -1,9 +1,7 @@
 import sharp from 'sharp'
 import { createClient } from '@supabase/supabase-js'
 import { STORY_WIDTH, STORY_HEIGHT } from './constants'
-
-// Font family for SVG text rendering (must be available to libvips/fontconfig)
-const FONT_FAMILY = "'Helvetica Neue', Helvetica, Arial, sans-serif"
+import { FONT_FAMILY, registerFonts } from './fonts'
 
 function getSupabaseAdmin() {
   return createClient(
@@ -35,6 +33,7 @@ export async function generateStoryImage(
   text: StoryText,
   postId: string
 ): Promise<{ storagePath: string; publicUrl: string }> {
+  registerFonts()
   const supabase = getSupabaseAdmin()
 
   // Download the source image
@@ -77,10 +76,10 @@ export async function generateStoryImage(
     <svg width="${STORY_WIDTH}" height="${STORY_HEIGHT}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
-          .line1 { fill: white; font-size: 52px; font-weight: 700; font-family: ${FONT_FAMILY}; }
-          .line2 { fill: #e0e0e0; font-size: 36px; font-weight: 400; font-family: ${FONT_FAMILY}; }
-          .cta { fill: #00D4AA; font-size: 32px; font-weight: 700; font-family: ${FONT_FAMILY}; }
-          .brand { fill: rgba(255,255,255,0.7); font-size: 24px; font-weight: 600; font-family: ${FONT_FAMILY}; }
+          .line1 { fill: white; font-size: 52px; font-weight: 700; font-family: '${FONT_FAMILY}'; }
+          .line2 { fill: #e0e0e0; font-size: 36px; font-weight: 400; font-family: '${FONT_FAMILY}'; }
+          .cta { fill: #00D4AA; font-size: 32px; font-weight: 700; font-family: '${FONT_FAMILY}'; }
+          .brand { fill: rgba(255,255,255,0.7); font-size: 24px; font-weight: 600; font-family: '${FONT_FAMILY}'; }
         </style>
       </defs>
       <text x="60" y="1560" class="line1">${line1Escaped}</text>
